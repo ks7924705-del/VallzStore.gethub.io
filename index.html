@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vallz Store</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: #ffffff;
+      color: #000000;
+    }
+  </style>
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col justify-between">
+
+  <!-- HEADER -->
+  <header class="w-full border-b border-gray-200 px-4 py-3 bg-white sticky top-0 z-50">
+    <div class="max-w-md mx-auto flex justify-between items-center">
+      <a href="#" onclick="showPage('home')" class="text-xl font-bold tracking-tight text-gray-900">
+        Vallz Store
+      </a>
+      <div class="flex items-center space-x-2">
+        <button class="bg-[#1f1f1f] text-white text-xs px-3 py-2 font-medium hover:bg-black transition">
+          Baca lebih lanjut
+        </button>
+        <button onclick="toggleMenu()" class="p-1 text-gray-800">
+          <i class="fa-solid fa-bars text-lg"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- NAVIGATION DRAWER -->
+  <div id="mobile-menu" class="hidden max-w-md mx-auto w-full bg-gray-100 border-b border-gray-300 p-4 space-y-2">
+    <button onclick="showPage('home')" class="block w-full text-left font-bold py-1 border-b text-sm">HOME</button>
+    <button onclick="showPage('flash-sale')" class="block w-full text-left font-bold py-1 border-b text-sm">FLASH SALE AKUN</button>
+    <button onclick="showPage('topup')" class="block w-full text-left font-bold py-1 border-b text-sm">TEMPAT TOP UP GAME</button>
+    <button onclick="showPage('joki')" class="block w-full text-left font-bold py-1 border-b text-sm">JASA JOKI</button>
+  </div>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-md mx-auto w-full px-4 py-6 flex-1">
+
+    <!-- PAGE: HOME -->
+    <div id="page-home" class="space-y-6">
+      <div class="text-center">
+        <h1 class="text-3xl font-black tracking-tight">
+          Vallz <span class="text-[#b89535]">Store</span>
+        </h1>
+      </div>
+
+      <div class="w-full flex justify-center bg-gray-50 border border-gray-200 p-6">
+        <div class="text-center">
+          <div class="text-6xl font-serif font-black tracking-tighter text-black flex items-center justify-center">
+            V<span class="text-[#c5a059] -ml-3">S</span>
+          </div>
+          <h2 class="text-2xl font-serif font-bold tracking-wider mt-2">Vallz Store</h2>
+          <p class="text-[10px] tracking-[0.3em] font-semibold text-gray-600 uppercase border-t border-b border-gray-400 py-0.5 mt-1 inline-block">
+            — LEXURY STOIRE —
+          </p>
+        </div>
+      </div>
+
+      <div class="space-y-2">
+        <button onclick="showPage('flash-sale')" class="w-full bg-[#1f1f1f] text-white text-xs font-bold py-3 uppercase tracking-wider hover:bg-black transition">
+          FLASH SALE AKUN
+        </button>
+        <div class="grid grid-cols-2 gap-2">
+          <button onclick="showPage('topup')" class="w-full bg-[#1f1f1f] text-white text-xs font-bold py-3 hover:bg-black transition">
+            Tempat top up game
+          </button>
+          <button onclick="showPage('joki')" class="w-full bg-[#1f1f1f] text-white text-xs font-bold py-3 hover:bg-black transition">
+            Jasa joki
+          </button>
+        </div>
+      </div>
+
+      <div class="relative bg-gradient-to-r from-purple-900 via-indigo-900 to-black rounded-lg overflow-hidden p-4 text-white border border-purple-500/30">
+        <div class="flex justify-between items-center">
+          <div class="space-y-1">
+            <span class="text-[9px] bg-purple-600 text-white px-1.5 py-0.5 rounded uppercase font-bold">LUXURY STORE</span>
+            <h3 class="text-2xl font-black text-yellow-400 leading-tight">DISKON<br/><span class="text-white text-xl">UP TO</span> 50%</h3>
+            <p class="text-[9px] text-gray-300">Gaming Shop & Joki Service</p>
+            <div class="pt-1">
+              <span class="text-[8px] bg-amber-500 text-black font-bold px-2 py-0.5 rounded-full">Live Sale</span>
+              <span class="text-[8px] bg-gray-800 text-white font-bold px-2 py-0.5 rounded-full border border-gray-600">Limited Offer</span>
+            </div>
+          </div>
+          <div class="text-right">
+            <i class="fa-solid fa-headset text-5xl text-purple-400/80"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-1 text-gray-800 text-lg">
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star"></i>
+        <i class="fa-solid fa-star-half-stroke"></i>
+      </div>
+
+      <div class="flex space-x-2">
+        <button onclick="vote('like')" class="border border-gray-300 px-3 py-1.5 text-xs rounded flex items-center space-x-1 text-gray-700 hover:bg-gray-50">
+          <i class="fa-regular fa-thumbs-up text-xs"></i>
+          <span id="like-count">0</span>
+        </button>
+        <button onclick="vote('dislike')" class="border border-gray-300 px-3 py-1.5 text-xs rounded flex items-center space-x-1 text-gray-700 hover:bg-gray-50">
+          <i class="fa-regular fa-thumbs-down text-xs"></i>
+          <span id="dislike-count">0</span>
+        </button>
+      </div>
+
+      <form onsubmit="handleFormSubmit(event)" class="space-y-3 pt-2">
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Gmail : <span class="text-gray-400 font-normal">(wajib)</span></label>
+          <input type="email" required class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black" />
+        </div>
+        <button type="submit" class="bg-[#1f1f1f] text-white text-xs font-bold px-5 py-2 hover:bg-black transition">
+          Kirim
+        </button>
+      </form>
+
+      <div>
+        <a href="https://wa.me/6283899950805" target="_blank" class="inline-block bg-[#1f1f1f] text-white text-xs font-bold px-4 py-2.5 hover:bg-black transition">
+          nomor admin
+        </a>
+      </div>
+    </div>
+
+    <!-- PAGE: FLASH SALE AKUN -->
+    <div id="page-flash-sale" class="hidden space-y-6">
+      <div class="text-center">
+        <h1 class="text-3xl font-black italic tracking-wide">
+          <span class="text-[#b89535]">FLASH SALE</span> AKUN
+        </h1>
+      </div>
+
+      <div class="w-28 bg-gray-50 border border-gray-200 p-2 text-center">
+        <div class="text-2xl font-serif font-black text-black">V<span class="text-[#c5a059]">S</span></div>
+        <div class="text-[8px] font-bold">Vallz Store</div>
+      </div>
+
+      <div>
+        <button onclick="showPage('home')" class="bg-[#1f1f1f] text-white text-xs font-bold px-4 py-2 hover:bg-black transition">
+          Back
+        </button>
+      </div>
+
+      <div class="space-y-2 border-b border-gray-200 pb-6">
+        <div class="w-full overflow-hidden border border-amber-500 rounded-lg bg-black">
+          <img src="https://i.postimg.co/fyM3s2y4/268000.png" alt="Akun ML-1001" class="w-full h-auto object-cover" />
+        </div>
+        <div class="space-y-1 text-xs">
+          <p class="font-bold uppercase tracking-wider text-black">SIAPA CEPAT DIA DAPAT</p>
+          <p class="text-gray-600">Spek lengkap bisa lihat di gambar</p>
+          <p class="font-semibold">kode : <span class="font-bold">ML-1001</span></p>
+          <p class="text-gray-600 uppercase">SPESIAL BUAT KAMU DISCOUNT</p>
+          <p class="font-bold text-black">Harga 800k Menjadi 400K AJA BOSQU</p>
+        </div>
+      </div>
+
+      <div class="space-y-2 pb-4">
+        <div class="w-full overflow-hidden border border-amber-500 rounded-lg bg-black">
+          <img src="https://i.postimg.co/N0KzWj1v/268002.png" alt="Akun ML-1010" class="w-full h-auto object-cover" />
+        </div>
+        <div class="space-y-1 text-xs">
+          <p class="font-bold uppercase tracking-wider text-black">SIAPA CEPAT DIA DAPAT</p>
+          <p class="text-gray-600">Spek lengkap bisa lihat di gambar</p>
+          <p class="font-semibold">Kode : <span class="font-bold">ML-1010</span></p>
+          <p class="text-gray-600 uppercase">SPESIAL BUAT KAMU DISCOUNT</p>
+          <p class="font-bold text-black">Harga 400k JADI 199K AJA NIH BOSQU</p>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <a href="https://instagram.com" target="_blank" class="inline-block text-pink-600 text-2xl">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <div>
+          <a href="https://wa.me/6283899950805" target="_blank" class="inline-block bg-[#1f1f1f] text-white text-xs font-bold px-4 py-2.5 hover:bg-black transition">
+            Link saluran admin
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: TOP UP GAMES -->
+    <div id="page-topup" class="hidden space-y-6">
+      <div class="text-center">
+        <h1 class="text-3xl font-black italic tracking-wide">
+          top up <span class="text-[#b89535]">games</span>
+        </h1>
+      </div>
+
+      <div class="w-28 bg-gray-50 border border-gray-200 p-2 text-center">
+        <div class="text-2xl font-serif font-black text-black">V<span class="text-[#c5a059]">S</span></div>
+        <div class="text-[8px] font-bold">Vallz Store</div>
+      </div>
+
+      <div>
+        <button onclick="showPage('home')" class="bg-[#1f1f1f] text-white text-xs font-bold px-4 py-2 hover:bg-black transition">
+          Kembali
+        </button>
+      </div>
+
+      <div class="bg-black text-amber-400 p-4 rounded-xl border-2 border-amber-500 shadow-xl space-y-4 text-center">
+        <div class="text-center border-b border-amber-500/40 pb-2">
+          <div class="text-2xl font-serif font-black text-amber-400">V<span class="text-white">S</span></div>
+          <h2 class="text-lg font-bold text-amber-300 uppercase tracking-widest">VALLZ STORE</h2>
+          <p class="text-[9px] text-amber-200 tracking-wider">TOP UP DIAMOND MLBB MURAH & TERCEPAT</p>
+        </div>
+
+        <h3 class="text-xs font-bold bg-amber-500 text-black py-1 uppercase rounded">LIST DIAMOND</h3>
+
+        <div class="grid grid-cols-2 gap-2 text-[10px]">
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>5 💎</span> <span class="font-bold text-white">Rp 1.500</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>12 💎</span> <span class="font-bold text-white">Rp 3.500</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>19 💎</span> <span class="font-bold text-white">Rp 5.500</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>28 💎</span> <span class="font-bold text-white">Rp 8.000</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>44 💎</span> <span class="font-bold text-white">Rp 12.000</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>59 💎</span> <span class="font-bold text-white">Rp 16.000</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>85 💎</span> <span class="font-bold text-white">Rp 23.000</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>170 💎</span> <span class="font-bold text-white">Rp 45.000</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>240 💎</span> <span class="font-bold text-white">Rp 64.000</span>
+          </div>
+          <div class="bg-zinc-900 border border-amber-500/50 p-1.5 rounded flex justify-between items-center">
+            <span>296 💎</span> <span class="font-bold text-white">Rp 79.000</span>
+          </div>
+        </div>
+
+        <div class="border-t border-amber-500/40 pt-2 text-[10px] space-y-1">
+          <p class="font-bold text-amber-300">WEEKLY DIAMOND PASS</p>
+          <div class="bg-zinc-900 border border-amber-500/50 p-2 rounded flex justify-between items-center">
+            <span>1x Weekly Pass</span> <span class="font-bold text-white">Rp 27.500</span>
+          </div>
+        </div>
+
+        <div class="text-[10px] text-amber-200 border-t border-amber-500/30 pt-2">
+          <p><i class="fa-brands fa-whatsapp"></i> HUBUNGI KAMI: 082122905448</p>
+        </div>
+      </div>
+
+      <div class="text-center space-y-1 text-xs py-2">
+        <p class="font-bold text-black text-sm mb-2">Kenapa harus top up di vallz store</p>
+        <p class="text-gray-700">• Proses Instan</p>
+        <p class="text-gray-700">• Aman 100%</p>
+        <p class="text-gray-700">• Harga terbaik</p>
+      </div>
+
+      <form onsubmit="handleFormSubmit(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">login akun moonton <span class="text-gray-400 font-normal">(wajib)</span></label>
+          <input type="text" required class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Pasword moonton <span class="text-gray-400 font-normal">(wajib)</span></label>
+          <input type="password" required class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Telepon</label>
+          <input type="tel" class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">kenapa anda memilih store kami</label>
+          <select class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black bg-white">
+            <option value="">Pilih satu opsi</option>
+            <option value="Harga Murah">Harga Murah</option>
+            <option value="Proses Cepat">Proses Cepat</option>
+            <option value="Terpercaya">Terpercaya</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">saran dan kritik</label>
+          <textarea rows="4" class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black"></textarea>
+        </div>
+        <button type="submit" class="bg-[#1f1f1f] text-white text-xs font-bold px-5 py-2 hover:bg-black transition">
+          Kirim
+        </button>
+      </form>
+
+      <div class="flex space-x-3 pt-2">
+        <a href="https://wa.me/6283899950805" target="_blank" class="text-green-500 text-2xl"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="https://instagram.com" target="_blank" class="text-pink-600 text-2xl"><i class="fa-brands fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <!-- PAGE: JOKI AKUN -->
+    <div id="page-joki" class="hidden space-y-6">
+      <div class="text-center">
+        <h1 class="text-3xl font-black tracking-tight">
+          Joki <span class="text-black">akun</span>
+        </h1>
+      </div>
+
+      <div>
+        <button onclick="showPage('home')" class="bg-[#1f1f1f] text-white text-xs font-bold px-4 py-2 hover:bg-black transition">
+          Home
+        </button>
+      </div>
+
+      <form onsubmit="handleFormSubmit(event)" class="space-y-3">
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">login akun moonton <span class="text-gray-400 font-normal">(wajib)</span></label>
+          <input type="text" required class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Pasword moonton <span class="text-gray-400 font-normal">(wajib)</span></label>
+          <input type="password" required class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">Telepon</label>
+          <input type="tel" class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black" />
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">kenapa anda memilih store kami</label>
+          <select class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black bg-white">
+            <option value="">Pilih satu opsi</option>
+            <option value="Harga Murah">Harga Murah</option>
+            <option value="Proses Cepat">Proses Cepat</option>
+            <option value="Terpercaya">Terpercaya</option>
+          </select>
+        </div>
+        <div>
+          <label class="block text-xs font-semibold text-gray-700 mb-1">saran dan kritik</label>
+          <textarea rows="4" class="w-full border border-gray-400 p-2 text-sm rounded-md focus:outline-none focus:border-black"></textarea>
+        </div>
+        <button type="submit" class="bg-[#1f1f1f] text-white text-xs font-bold px-5 py-2 hover:bg-black transition">
+          Kirim
+        </button>
+      </form>
+
+      <div class="bg-gradient-to-b from-amber-100 via-amber-300 to-amber-600 p-4 rounded-xl text-black border border-amber-500 shadow-2xl space-y-4">
+        <div class="text-center">
+          <div class="text-3xl font-serif font-black text-black">V<span class="text-amber-800">S</span></div>
+          <h2 class="text-xl font-bold tracking-widest">Vallz Store</h2>
+          <p class="text-[9px] tracking-widest font-semibold uppercase text-amber-900">— LEXURY STOIRE —</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-center text-xs font-bold">
+          <div class="bg-amber-200/80 py-1 border border-amber-400 rounded">REGULER</div>
+          <div class="bg-amber-200/80 py-1 border border-amber-400 rounded">EXPRESS</div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-2 text-[10px]">
+          <div class="bg-amber-100/90 border border-amber-400 p-1.5 rounded text-center">
+            <p class="font-bold">Master</p>
+            <p class="text-amber-900 font-extrabold">Rp 5.000</p>
+          </div>
+          <div class="bg-amber-100/90 border border-amber-400 p-1.5 rounded text-center">
+            <p class="font-bold">Grand Master</p>
+            <p class="text-amber-900 font-extrabold">Rp 6.000</p>
+          </div>
+          <div class="bg-amber-100/90 border border-amber-400 p-1.5 rounded text-center">
+            <p class="font-bold">Epic</p>
+            <p class="text-amber-900 font-extrabold">Rp 7.000</p>
+          </div>
+          <div class="bg-amber-100/90 border border-amber-400 p-1.5 rounded text-center">
+            <p class="font-bold">Legends</p>
+            <p class="text-amber-900 font-extrabold">Rp 8.000</p>
+          </div>
+          <div class="bg-amber-100/90 border border-amber-400 p-1.5 rounded text-center">
+            <p class="font-bold">Mythic Grading</p>
+            <p class="text-amber-900 font-extrabold">Rp 230.000</p>
+          </div>
+          <div class="bg-amber-100/90 border border-amber-400 p-1.5 rounded text-center">
+            <p class="font-bold">Mythic Romawi</p>
+            <p class="text-amber-900 font-extrabold">Rp 18.000</p>
+          </div>
+          <div class="bg-amber-100/90 border border-amber-400 p-1.5 rounded text-center">
+            <p class="font-bold">Mythical Honor</p>
+            <p class="text-amber-900 font-extrabold">Rp 22.000</p>
+          </div>
+          <div class="bg-amber-100/90 border border-amber-400 p-1.5 rounded text-center">
+            <p class="font-bold">Mythical Glory</p>
+            <p class="text-amber-900 font-extrabold">Rp 28.000</p>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <a href="https://wa.me/6283899950805" target="_blank" class="inline-block bg-[#1f1f1f] text-white text-xs font-bold px-4 py-2.5 hover:bg-black transition">
+          hubungi admin joki kami
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="w-full bg-[#f2f2f2] border-t border-gray-300 py-8 px-4 text-center space-y-6 text-xs text-gray-700">
+    <div class="space-y-1">
+      <h4 class="font-bold text-sm text-black mb-1">Lokasi</h4>
+      <p>Jalan Bonang 23510</p>
+      <p>Grubug SR 2 NO 22</p>
+    </div>
+
+    <div class="space-y-1">
+      <h4 class="font-bold text-sm text-black mb-1">Jam</h4>
+      <p>Senin—Jumat</p>
+      <p>8 pagi — 6 sore</p>
+    </div>
+
+    <div class="space-y-1">
+      <h4 class="font-bold text-sm text-black mb-1">Kontak</h4>
+      <p class="underline">zenxiarvelicia@gmail.com</p>
+      <p>+62 838-9995-0805</p>
+    </div>
+
+    <div class="pt-4 text-gray-500 text-[11px]">
+      By Vallz
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script>
+    let likeCount = 0;
+    let dislikeCount = 0;
+
+    function showPage(pageId) {
+      document.getElementById('page-home').classList.add('hidden');
+      document.getElementById('page-flash-sale').classList.add('hidden');
+      document.getElementById('page-topup').classList.add('hidden');
+      document.getElementById('page-joki').classList.add('hidden');
+
+      document.getElementById('page-' + pageId).classList.remove('hidden');
+      document.getElementById('mobile-menu').classList.add('hidden');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function toggleMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function vote(type) {
+      if (type === 'like') {
+        likeCount++;
+        document.getElementById('like-count').innerText = likeCount;
+      } else if (type === 'dislike') {
+        dislikeCount++;
+        document.getElementById('dislike-count').innerText = dislikeCount;
+      }
+    }
+
+    function handleFormSubmit(e) {
+      e.preventDefault();
+      alert('Data berhasil dikirim! Silahkan hubungi Admin via WhatsApp.');
+    }
+  </script>
+</body>
+</html>
