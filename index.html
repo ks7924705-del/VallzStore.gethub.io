@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vallz Store – Official Top Up & Joki Gaming Terpercaya</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            900: '#0c4a6e',
+                        },
+                        darkBg: '#090d16',
+                        cardBg: '#111827',
+                        cardHover: '#1f293d'
+                    },
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #090d16;
+            color: #f3f4f6;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(circle at 50% 0%, rgba(14, 165, 233, 0.15) 0%, transparent 50%),
+                              radial-gradient(circle at 90% 90%, rgba(2, 132, 199, 0.08) 0%, transparent 40%);
+            background-attachment: fixed;
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 50%, #0284c7 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gradient-btn {
+            background: linear-gradient(135deg, #38bdf8 0%, #0ea5e9 100%);
+            transition: all 0.3s ease;
+        }
+        .gradient-btn:hover {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0284c7 100%);
+            box-shadow: 0 10px 20px -5px rgba(14, 165, 233, 0.4);
+        }
+        .glass-card {
+            background: rgba(17, 24, 39, 0.75);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(14, 165, 233, 0.15);
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #090d16;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #0ea5e9;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Navbar -->
+    <header class="sticky top-0 z-50 bg-[#090d16]/80 backdrop-blur-xl border-b border-white/10">
+        <div class="max-w-5xl mx-auto px-4 py-3.5 flex items-center justify-between">
+            <a href="#" onclick="switchTab('home')" class="flex items-center gap-3 group">
+                <div class="w-10 h-10 rounded-xl gradient-btn flex items-center justify-center shadow-lg shadow-brand-500/20 group-hover:scale-105 transition">
+                    <i class="fa-solid fa-bolt text-white text-lg"></i>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-base tracking-tight text-white flex items-center gap-1.5">
+                        VALLZ STORE <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    </span>
+                    <span class="text-[11px] text-gray-400 font-medium">Instant Gaming Store</span>
+                </div>
+            </a>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex items-center gap-1 bg-white/5 p-1 rounded-full border border-white/10">
+                <button onclick="switchTab('home')" class="nav-btn px-4 py-1.5 rounded-full text-xs font-semibold text-brand-400 transition" data-target="home">Beranda</button>
+                <button onclick="switchTab('topup')" class="nav-btn px-4 py-1.5 rounded-full text-xs font-semibold text-gray-300 hover:text-white transition" data-target="topup">Top Up</button>
+                <button onclick="switchTab('joki')" class="nav-btn px-4 py-1.5 rounded-full text-xs font-semibold text-gray-300 hover:text-white transition" data-target="joki">Jasa Joki</button>
+            </nav>
+
+            <div class="hidden md:flex items-center gap-3">
+                <a href="https://wa.me/6282122905448" target="_blank" class="px-4 py-2 rounded-xl gradient-btn text-white font-bold text-xs shadow-lg shadow-brand-500/20 flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Admin CS
+                </a>
+            </div>
+
+            <!-- Mobile Hamburger -->
+            <button onclick="toggleMobileMenu()" class="md:hidden text-gray-300 hover:text-white p-2 text-xl">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-[#111827] border-b border-white/10 px-4 py-4 space-y-2">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded-lg hover:bg-white/5 text-gray-200 font-medium text-sm">Beranda</button>
+            <button onclick="switchTab('topup'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded-lg hover:bg-white/5 text-gray-200 font-medium text-sm">Top Up Game</button>
+            <button onclick="switchTab('joki'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded-lg hover:bg-white/5 text-gray-200 font-medium text-sm">Jasa Joki Rank</button>
+            <a href="https://wa.me/6282122905448" target="_blank" class="block text-center py-2.5 rounded-xl gradient-btn text-white font-bold text-xs mt-2">
+                <i class="fa-brands fa-whatsapp mr-1"></i> Hubungi Admin WhatsApp
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-6">
+
+        <!-- HOME SECTION -->
+        <section id="section-home" class="space-y-6">
+            <!-- Hero Banner -->
+            <div class="relative rounded-2xl overflow-hidden glass-card p-6 md:p-10 border border-brand-500/30">
+                <div class="absolute -right-10 -bottom-10 w-60 h-60 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="relative z-10 max-w-lg space-y-4">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-500/10 border border-brand-500/30 text-brand-300 text-xs font-semibold">
+                        <i class="fa-solid fa-shield-check text-brand-400"></i> Resmi, Cepat & 100% Aman
+                    </span>
+                    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white leading-tight">
+                        Top Up & Joki Game <span class="gradient-text">Tercepat di Indonesia</span>
+                    </h1>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        Platform transaksi diamond Mobile Legends terpercaya dengan proses instan 1-3 detik langsung masuk dan layanan joki pro player berpengalaman.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="switchTab('topup')" class="px-6 py-3 rounded-xl gradient-btn text-white font-bold text-sm shadow-xl shadow-brand-500/25 flex items-center gap-2">
+                            <i class="fa-solid fa-gem"></i> Top Up Sekarang
+                        </button>
+                        <button onclick="switchTab('joki')" class="px-6 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white border border-white/10 font-bold text-sm transition flex items-center gap-2">
+                            <i class="fa-solid fa-trophy text-amber-400"></i> Jasa Joki Rank
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Features / Keunggulan Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="glass-card p-5 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-brand-500/10 border border-brand-500/30 flex items-center justify-center text-brand-400 text-xl shrink-0">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm mb-1">Proses Instan</h3>
+                        <p class="text-xs text-gray-400">Sistem otomatis memproses pesanan diamond Anda dalam hitungan detik.</p>
+                    </div>
+                </div>
+                <div class="glass-card p-5 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xl shrink-0">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm mb-1">Garansi 100% Aman</h3>
+                        <p class="text-xs text-gray-400">Legalitas terjamin resmi, anti-ban, dan data privasi aman terjaga.</p>
+                    </div>
+                </div>
+                <div class="glass-card p-5 flex items-start gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 text-xl shrink-0">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-white text-sm mb-1">Support 24 Jam</h3>
+                        <p class="text-xs text-gray-400">Admin customer service siap membantu kapan pun Anda butuhkan.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Game Selector Card -->
+            <div class="glass-card p-6">
+                <h2 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-gamepad text-brand-400"></i> Pilih Game Favoritmu
+                </h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div onclick="switchTab('topup')" class="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center font-bold text-lg text-white shadow-md">
+                                ML
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-sm group-hover:text-brand-300 transition">Mobile Legends: Bang Bang</h3>
+                                <p class="text-xs text-gray-400">Diamond Resmi & Aman</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-white transition"></i>
+                    </div>
+
+                    <div onclick="switchTab('joki')" class="bg-white/5 hover:bg-white/10 border border-white/10 hover:border-brand-500/50 p-4 rounded-xl cursor-pointer transition flex items-center justify-between group">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-orange-700 flex items-center justify-center font-bold text-lg text-white shadow-md">
+                                <i class="fa-solid fa-trophy"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-white text-sm group-hover:text-brand-300 transition">Jasa Joki Rank MLBB</h3>
+                                <p class="text-xs text-gray-400">Master s.d. Mythic Immortal</p>
+                            </div>
+                        </div>
+                        <i class="fa-solid fa-chevron-right text-gray-500 group-hover:text-white transition"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Testimonial & Feedback Section -->
+            <div class="glass-card p-6 space-y-4">
+                <div class="flex flex-col sm:flex-row items-center justify-between gap-4 border-b border-white/10 pb-4">
+                    <div>
+                        <h3 class="font-bold text-white text-base">Ulasan & Kepuasan Pelanggan</h3>
+                        <p class="text-xs text-gray-400">Berdasarkan ulasan dari 1.250+ transaksi sukses.</p>
+                    </div>
+                    <div class="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/10">
+                        <div class="text-2xl font-extrabold text-white">4.9</div>
+                        <div>
+                            <div class="flex text-amber-400 text-xs">
+                                <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
+                            </div>
+                            <span class="text-[10px] text-gray-400">Rating Toko</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between pt-2">
+                    <span class="text-xs text-gray-300">Apakah website ini membantu transaksi Anda?</span>
+                    <div class="flex gap-2">
+                        <button onclick="handleFeedback('like')" id="btn-like" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-brand-500/20 text-xs border border-white/10 text-gray-200 transition">
+                            <i id="icon-like" class="fa-regular fa-thumbs-up text-brand-400"></i> <span id="like-count">142</span>
+                        </button>
+                        <button onclick="handleFeedback('dislike')" id="btn-dislike" class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-red-500/20 text-xs border border-white/10 text-gray-200 transition">
+                            <i id="icon-dislike" class="fa-regular fa-thumbs-down text-red-400"></i> <span id="dislike-count">2</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TOP UP SECTION -->
+        <section id="section-topup" class="hidden space-y-6">
+            <div class="flex items-center gap-3">
+                <button onclick="switchTab('home')" class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-white">Top Up Diamond Mobile Legends</h2>
+                    <p class="text-xs text-gray-400">Pilih nominal diamond dan lengkapi data akun Anda di bawah ini.</p>
+                </div>
+            </div>
+
+            <!-- Diamond Catalog Grid -->
+            <div class="glass-card p-5">
+                <div class="flex items-center justify-between mb-4">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-brand-400">Pilih Nominal Diamond</h3>
+                    <span id="selected-diamond-info" class="text-xs text-white bg-brand-500/20 border border-brand-500/40 px-2.5 py-1 rounded-lg">Belum dipilih</span>
+                </div>
+                <div id="diamond-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-h-72 overflow-y-auto pr-1">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+
+            <!-- Top Up Form -->
+            <div class="glass-card p-6">
+                <h3 class="font-bold text-white text-base mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-file-lines text-brand-400"></i> Formulir Pemesanan
+                </h3>
+                <form id="form-topup" onsubmit="submitTopup(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">User ID & Zone ID (Wajib)</label>
+                        <input type="text" id="topup-account" required placeholder="Contoh: 12345678 (2010)" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Password Moonton (Opsional / Jika via login)</label>
+                        <input type="password" id="topup-pass" placeholder="Kosongkan jika hanya menggunakan ID" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Nomor WhatsApp Anda</label>
+                        <input type="tel" id="topup-phone" required placeholder="Contoh: 083899950805" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Kenapa Memilih Vallz Store?</label>
+                        <select id="topup-reason" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                            <option value="">Pilih alasan...</option>
+                            <option value="Harga Termurah">Harga Termurah</option>
+                            <option value="Proses Cepat & Instan">Proses Cepat & Instan</option>
+                            <option value="Aman & Terpercaya">Aman & Terpercaya</option>
+                            <option value="Rekomendasi Teman">Rekomendasi Teman</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Saran & Kritik</label>
+                        <textarea id="topup-feedback" rows="2" placeholder="Tulis saran untuk toko kami..." class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 rounded-xl gradient-btn text-white font-bold text-sm shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Checkout Pesanan via WhatsApp
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- JOKI SECTION -->
+        <section id="section-joki" class="hidden space-y-6">
+            <div class="flex items-center gap-3">
+                <button onclick="switchTab('home')" class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-gray-300 hover:text-white hover:bg-white/10 transition">
+                    <i class="fa-solid fa-arrow-left"></i>
+                </button>
+                <div>
+                    <h2 class="text-xl font-bold text-white">Jasa Joki Rank Mobile Legends</h2>
+                    <p class="text-xs text-gray-400">Ditangani oleh pro player handal dengan garansi keamanan 100%.</p>
+                </div>
+            </div>
+
+            <!-- Joki Form -->
+            <div class="glass-card p-6">
+                <h3 class="font-bold text-white text-base mb-4 flex items-center gap-2">
+                    <i class="fa-solid fa-shield-halved text-brand-400"></i> Formulir Order Joki
+                </h3>
+                <form id="form-joki" onsubmit="submitJoki(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Login Akun Moonton (Wajib)</label>
+                        <input type="text" id="joki-account" required placeholder="Email / Username Moonton" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Password Moonton (Wajib)</label>
+                        <input type="password" id="joki-pass" required placeholder="Password Akun" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Nomor WhatsApp Anda</label>
+                        <input type="tel" id="joki-phone" required placeholder="Contoh: 083899950805" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Pilih Layanan Joki</label>
+                        <select id="joki-type" onchange="updateJokiPricing()" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white font-semibold text-brand-400 focus:outline-none focus:border-brand-500 transition">
+                            <option value="reguler">Reguler Standar</option>
+                            <option value="express">Express Kilat (Min 2 Hari Selesai) ⚡</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Pilih Target Rank Tujuan</label>
+                        <select id="joki-target-rank" onchange="syncRankSelectionFromDropdown()" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                            <option value="">Pilih rank atau klik dari katalog di bawah</option>
+                            <option value="Master">Master</option>
+                            <option value="Grand Master">Grand Master</option>
+                            <option value="Epic">Epic</option>
+                            <option value="Legends">Legends</option>
+                            <option value="Mythic Grading">Mythic Grading</option>
+                            <option value="Mythic Honor">Mythic Honor</option>
+                            <option value="Mythic Glory">Mythic Glory</option>
+                            <option value="Mythic Immortal">Mythic Immortal</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Kenapa Memilih Kami?</label>
+                        <select id="joki-reason" class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition">
+                            <option value="">Pilih alasan...</option>
+                            <option value="Aman & Terpercaya">Aman & Terpercaya</option>
+                            <option value="Pro Player Berpengalaman">Pro Player Berpengalaman</option>
+                            <option value="Proses Cepat & Garansi">Proses Cepat & Garansi</option>
+                            <option value="Rekomendasi Teman">Rekomendasi Teman</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-300 mb-1.5">Catatan / Request Hero</label>
+                        <textarea id="joki-feedback" rows="2" placeholder="Catatan khusus untuk joki..." class="w-full bg-[#090d16] border border-white/10 rounded-xl px-4 py-2.5 text-sm text-white focus:outline-none focus:border-brand-500 transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full py-3.5 rounded-xl gradient-btn text-white font-bold text-sm shadow-lg shadow-brand-500/25 flex items-center justify-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-lg"></i> Order Joki via WhatsApp
+                    </button>
+                </form>
+            </div>
+
+            <!-- Joki Catalog List With Stars -->
+            <div class="glass-card p-6">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
+                    <div>
+                        <h3 class="font-bold text-white text-base">Katalog Harga & Bintang Joki</h3>
+                        <p id="catalog-subtitle" class="text-xs text-gray-400">Klik kartu rank di bawah untuk otomatis mengisi formulir.</p>
+                    </div>
+                    <div class="flex gap-2 bg-[#090d16] p-1 rounded-xl border border-white/10">
+                        <button type="button" onclick="setJokiMode('reguler')" id="btn-mode-reguler" class="px-3 py-1.5 rounded-lg gradient-btn text-white font-bold text-xs transition">Reguler</button>
+                        <button type="button" onclick="setJokiMode('express')" id="btn-mode-express" class="px-3 py-1.5 rounded-lg text-gray-400 hover:text-white font-bold text-xs transition">Express ⚡</button>
+                    </div>
+                </div>
+
+                <div id="joki-rank-grid" class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                    <!-- Populated via JS -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Customer Service Widget -->
+    <div class="fixed bottom-6 right-6 z-50">
+        <div id="cs-popup" class="hidden mb-3 w-72 glass-card p-4 shadow-2xl border border-brand-500/40">
+            <div class="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-xl gradient-btn flex items-center justify-center text-white font-bold text-xs">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-white text-xs">Live Support Vallz</div>
+                        <div class="text-[10px] text-emerald-400 flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Online 24 Jam</div>
+                    </div>
+                </div>
+                <button onclick="toggleCsPopup()" class="text-gray-400 hover:text-white text-xs"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <p class="text-xs text-gray-300 mb-3">Halo! Ada kendala saat top up atau joki rank? Hubungi CS kami sekarang.</p>
+            <a href="https://wa.me/6282122905448?text=Halo%20Admin%20Vallz%20Store,%20saya%20ingin%20bertanya." target="_blank" class="block text-center py-2.5 rounded-xl gradient-btn text-white font-bold text-xs shadow-md">
+                <i class="fa-brands fa-whatsapp mr-1"></i> Chat CS WhatsApp
+            </a>
+        </div>
+        
+        <button onclick="toggleCsPopup()" class="w-14 h-14 rounded-2xl gradient-btn text-white shadow-xl shadow-brand-500/40 flex items-center justify-center text-xl hover:scale-105 transition group">
+            <i class="fa-solid fa-headset group-hover:rotate-12 transition"></i>
+        </button>
+    </div>
+
+    <!-- Footer -->
+    <footer class="mt-16 bg-[#05070c] border-t border-white/10 text-gray-400 text-xs py-10 px-4">
+        <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-white/10">
+            <div class="space-y-3">
+                <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-lg gradient-btn flex items-center justify-center text-white font-bold text-sm">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <span class="font-bold text-white text-sm tracking-wide">VALLZ STORE</span>
+                </div>
+                <p class="text-gray-400 text-xs leading-relaxed">Pusat layanan top up game dan jasa joki profesional terpercaya dengan pelayanan cepat 24 jam nonstop.</p>
+            </div>
+            <div class="space-y-2">
+                <h4 class="font-bold text-white text-sm">Jam Operasional</h4>
+                <p class="text-brand-400 font-semibold">24 Jam Nonstop</p>
+                <p class="text-gray-400">Senin s.d. Minggu (Setiap Hari)</p>
+                <p class="text-gray-400">Jalan Bonang 23510, Grubug SR 2 NO 22</p>
+            </div>
+            <div class="space-y-2">
+                <h4 class="font-bold text-white text-sm">Hubungi Kami</h4>
+                <p><a href="mailto:adisnoval126@gmail.com" class="hover:text-brand-400 underline transition">adisnoval126@gmail.com</a></p>
+                <p>WhatsApp: +62 838-9995-0805</p>
+                <div class="flex gap-3 pt-2">
+                    <a href="https://wa.me/6282122905448" target="_blank" class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-emerald-400 hover:bg-emerald-500 hover:text-white transition"><i class="fa-brands fa-whatsapp"></i></a>
+                    <a href="https://www.instagram.com/vallzz_store165" target="_blank" class="w-9 h-9 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-pink-400 hover:bg-pink-500 hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-5xl mx-auto pt-6 text-center text-gray-500 text-[11px]">
+            &copy; 2026 Vallz Store. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- JavaScript Logic -->
+    <script>
+        const diamondItems = [
+            { id: 1, count: "5", bonus: "+0", price: "Rp 1.500" },
+            { id: 2, count: "10", bonus: "+1", price: "Rp 2.900" },
+            { id: 3, count: "19", bonus: "+2", price: "Rp 5.500" },
+            { id: 4, count: "28", bonus: "+3", price: "Rp 7.900" },
+            { id: 5, count: "36", bonus: "+4", price: "Rp 9.900" },
+            { id: 6, count: "44", bonus: "+5", price: "Rp 12.500" },
+            { id: 7, count: "59", bonus: "+6", price: "Rp 16.500" },
+            { id: 8, count: "85", bonus: "+9", price: "Rp 23.500" },
+            { id: 9, count: "110", bonus: "+11", price: "Rp 29.900" },
+            { id: 10, count: "144", bonus: "+15", price: "Rp 38.900" },
+            { id: 11, count: "170", bonus: "+18", price: "Rp 45.900" },
+            { id: 12, count: "222", bonus: "+23", price: "Rp 59.900" },
+            { id: 13, count: "284", bonus: "+30", price: "Rp 76.900" },
+            { id: 14, count: "355", bonus: "+38", price: "Rp 95.900" },
+            { id: 15, count: "429", bonus: "+45", price: "Rp 115.000" },
+            { id: 16, count: "514", bonus: "+55", price: "Rp 138.000" },
+            { id: 17, count: "565", bonus: "+60", price: "Rp 152.000" },
+            { id: 18, count: "716", bonus: "+75", price: "Rp 189.000" },
+            { id: 19, count: "878", bonus: "+92", price: "Rp 232.000" },
+            { id: 20, count: "963", bonus: "+101", price: "Rp 254.000" },
+            { id: 21, count: "1050", bonus: "+110", price: "Rp 278.000" },
+            { id: 22, count: "1220", bonus: "+130", price: "Rp 322.000" }
+        ];
+
+        const jokiRanks = [
+            { rank: "Master", reguler: "Rp 6.000", express: "Rp 12.000", stars: "⭐⭐⭐" },
+            { rank: "Grand Master", reguler: "Rp 6.000", express: "Rp 12.000", stars: "⭐⭐⭐⭐" },
+            { rank: "Epic", reguler: "Rp 7.000", express: "Rp 15.000", stars: "⭐⭐⭐⭐⭐" },
+            { rank: "Legends", reguler: "Rp 8.000", express: "Rp 18.000", stars: "⭐⭐⭐⭐⭐" },
+            { rank: "Mythic Grading", reguler: "Rp 230.000", express: "Rp 350.000", stars: "⭐ Placement" },
+            { rank: "Mythic Honor", reguler: "Rp 18.000", express: "Rp 35.000", stars: "🌟 25 Stars" },
+            { rank: "Mythic Glory", reguler: "Rp 22.000", express: "Rp 42.000", stars: "🌟 50 Stars" },
+            { rank: "Mythic Immortal", reguler: "Rp 28.000", express: "Rp 55.000", stars: "👑 Top Global" }
+        ];
+
+        let selectedDiamond = null;
+        let currentJokiMode = 'reguler';
+        let selectedRankCard = null;
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderDiamonds();
+            renderJokiRanks();
+        });
+
+        function renderDiamonds() {
+            const grid = document.getElementById('diamond-grid');
+            grid.innerHTML = diamondItems.map(item => `
+                <div onclick="selectDiamond(${item.id})" id="diamond-card-${item.id}" class="diamond-item bg-[#090d16] border border-white/10 rounded-xl p-3 text-center cursor-pointer hover:border-brand-500 transition relative">
+                    <div class="text-brand-400 text-base mb-1"><i class="fa-solid fa-gem"></i></div>
+                    <div class="font-bold text-white text-xs">${item.count} Diamonds</div>
+                    <div class="text-[10px] text-brand-300 mb-1">Bonus ${item.bonus}</div>
+                    <div class="text-xs font-semibold text-white">${item.price}</div>
+                </div>
+            `).join('');
+        }
+
+        function selectDiamond(id) {
+            document.querySelectorAll('.diamond-item').forEach(el => {
+                el.classList.remove('border-brand-500', 'bg-brand-500/20');
+                el.classList.add('border-white/10', 'bg-[#090d16]');
+            });
+            const selectedCard = document.getElementById(`diamond-card-${id}`);
+            if (selectedCard) {
+                selectedCard.classList.remove('border-white/10', 'bg-[#090d16]');
+                selectedCard.classList.add('border-brand-500', 'bg-brand-500/20');
+            }
+            selectedDiamond = diamondItems.find(i => i.id === id);
+            document.getElementById('selected-diamond-info').innerText = `${selectedDiamond.count} Diamonds (${selectedDiamond.price})`;
+        }
+
+        function renderJokiRanks() {
+            const grid = document.getElementById('joki-rank-grid');
+            grid.innerHTML = jokiRanks.map((j, index) => {
+                const price = currentJokiMode === 'express' ? j.express : j.reguler;
+                const isSelected = selectedRankCard === j.rank;
+                const borderClass = isSelected ? 'border-brand-500 bg-brand-500/20' : 'border-white/10 bg-[#090d16]';
+                
+                return `
+                    <div onclick="selectRankCard('${j.rank}')" id="rank-card-${index}" class="rank-card ${borderClass} rounded-xl p-3 text-center cursor-pointer hover:border-brand-500 transition">
+                        <div class="text-xs font-bold text-white mb-0.5">${j.rank}</div>
+                        <div class="text-[10px] text-amber-400 mb-1">${j.stars}</div>
+                        <div class="text-xs font-bold text-brand-400">${price}</div>
+                        <div class="text-[9px] text-gray-400 mt-1">${currentJokiMode === 'express' ? '⚡ Kilat' : 'Reguler'}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectRankCard(rankName) {
+            selectedRankCard = rankName;
+            document.getElementById('joki-target-rank').value = rankName;
+            highlightRankCards();
+            document.getElementById('form-joki').scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function syncRankSelectionFromDropdown() {
+            selectedRankCard = document.getElementById('joki-target-rank').value;
+            highlightRankCards();
+        }
+
+        function highlightRankCards() {
+            jokiRanks.forEach((j, index) => {
+                const card = document.getElementById(`rank-card-${index}`);
+                if (card) {
+                    if (j.rank === selectedRankCard) {
+                        card.className = "rank-card border-brand-500 bg-brand-500/20 rounded-xl p-3 text-center cursor-pointer transition";
+                    } else {
+                        card.className = "rank-card border-white/10 bg-[#090d16] rounded-xl p-3 text-center cursor-pointer hover:border-brand-500 transition";
+                    }
+                }
+            });
+        }
+
+        function setJokiMode(mode) {
+            currentJokiMode = mode;
+            const selectEl = document.getElementById('joki-type');
+            if(selectEl) selectEl.value = mode;
+
+            const btnReg = document.getElementById('btn-mode-reguler');
+            const btnExp = document.getElementById('btn-mode-express');
+            const subtitle = document.getElementById('catalog-subtitle');
+
+            if (mode === 'express') {
+                btnExp.className = "px-3 py-1.5 rounded-lg gradient-btn text-white font-bold text-xs transition";
+                btnReg.className = "px-3 py-1.5 rounded-lg text-gray-400 hover:text-white font-bold text-xs transition";
+                subtitle.innerText = "Mode: Express Kilat (Minimal 2 Hari Selesai)";
+            } else {
+                btnReg.className = "px-3 py-1.5 rounded-lg gradient-btn text-white font-bold text-xs transition";
+                btnExp.className = "px-3 py-1.5 rounded-lg text-gray-400 hover:text-white font-bold text-xs transition";
+                subtitle.innerText = "Mode: Reguler Standar";
+            }
+            renderJokiRanks();
+        }
+
+        function updateJokiPricing() {
+            const selectEl = document.getElementById('joki-type');
+            setJokiMode(selectEl.value);
+        }
+
+        function switchTab(tabName) {
+            ['home', 'topup', 'joki'].forEach(t => {
+                const el = document.getElementById(`section-${t}`);
+                if (el) el.classList.add('hidden');
+            });
+
+            const targetEl = document.getElementById(`section-${tabName}`);
+            if (targetEl) targetEl.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.dataset.target === tabName) {
+                    btn.classList.add('text-brand-400', 'bg-white/10');
+                    btn.classList.remove('text-gray-300');
+                } else {
+                    btn.classList.remove('text-brand-400', 'bg-white/10');
+                    btn.classList.add('text-gray-300');
+                }
+            });
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function toggleCsPopup() {
+            const popup = document.getElementById('cs-popup');
+            popup.classList.toggle('hidden');
+        }
+
+        let userVote = null;
+        let baseLikes = 142;
+        let baseDislikes = 2;
+
+        function handleFeedback(type) {
+            const btnLike = document.getElementById('btn-like');
+            const btnDislike = document.getElementById('btn-dislike');
+            const iconLike = document.getElementById('icon-like');
+            const iconDislike = document.getElementById('icon-dislike');
+            const likeCountEl = document.getElementById('like-count');
+            const dislikeCountEl = document.getElementById('dislike-count');
+
+            if (userVote === type) {
+                if (type === 'like') {
+                    baseLikes--;
+                    btnLike.classList.remove('bg-brand-500/20', 'border-brand-500');
+                    iconLike.className = 'fa-regular fa-thumbs-up text-brand-400';
+                } else {
+                    baseDislikes--;
+                    btnDislike.classList.remove('bg-red-500/20', 'border-red-500');
+                    iconDislike.className = 'fa-regular fa-thumbs-down text-red-400';
+                }
+                userVote = null;
+            } else {
+                if (userVote === 'like') {
+                    baseLikes--;
+                    btnLike.classList.remove('bg-brand-500/20', 'border-brand-500');
+                    iconLike.className = 'fa-regular fa-thumbs-up text-brand-400';
+                } else if (userVote === 'dislike') {
+                    baseDislikes--;
+                    btnDislike.classList.remove('bg-red-500/20', 'border-red-500');
+                    iconDislike.className = 'fa-regular fa-thumbs-down text-red-400';
+                }
+
+                if (type === 'like') {
+                    baseLikes++;
+                    btnLike.classList.add('bg-brand-500/20', 'border-brand-500');
+                    iconLike.className = 'fa-solid fa-thumbs-up text-brand-400';
+                } else {
+                    baseDislikes++;
+                    btnDislike.classList.add('bg-red-500/20', 'border-red-500');
+                    iconDislike.className = 'fa-solid fa-thumbs-down text-red-400';
+                }
+                userVote = type;
+            }
+
+            likeCountEl.innerText = baseLikes;
+            dislikeCountEl.innerText = baseDislikes;
+        }
+
+        function submitTopup(e) {
+            e.preventDefault();
+            const account = document.getElementById('topup-account').value;
+            const pass = document.getElementById('topup-pass').value;
+            const phone = document.getElementById('topup-phone').value;
+            const reason = document.getElementById('topup-reason').value;
+            const feedback = document.getElementById('topup-feedback').value;
+
+            if (!selectedDiamond) {
+                alert('Silakan pilih nominal diamond terlebih dahulu!');
+                return;
+            }
+
+            const message = `Halo Admin Vallz Store, saya ingin melakukan pemesanan Top Up:\n\n` +
+                            `• Layanan: Top Up Diamond MLBB\n` +
+                            `• Nominal: ${selectedDiamond.count} Diamond (${selectedDiamond.price})\n` +
+                            `• Akun/ID: ${account}\n` +
+                            `• Pass Moonton: ${pass || '-'}\n` +
+                            `• No WhatsApp: ${phone}\n` +
+                            `• Alasan Memilih: ${reason || '-'}\n` +
+                            `• Kritik & Saran: ${feedback || '-'}`;
+
+            window.open(`https://wa.me/6282122905448?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        function submitJoki(e) {
+            e.preventDefault();
+            const account = document.getElementById('joki-account').value;
+            const pass = document.getElementById('joki-pass').value;
+            const phone = document.getElementById('joki-phone').value;
+            const jokiType = document.getElementById('joki-type').value;
+            const targetRank = document.getElementById('joki-target-rank').value;
+            const reason = document.getElementById('joki-reason').value;
+            const feedback = document.getElementById('joki-feedback').value;
+
+            let priceText = '-';
+            if (targetRank) {
+                const foundRank = jokiRanks.find(r => r.rank === targetRank);
+                if (foundRank) {
+                    priceText = jokiType === 'express' ? foundRank.express : foundRank.reguler;
+                }
+            }
+
+            const message = `Halo Admin Joki Vallz Store, saya ingin order Jasa Joki:\n\n` +
+                            `• Layanan: Jasa Joki Rank MLBB\n` +
+                            `• Tipe Order: ${jokiType === 'express' ? 'Express Kilat ⚡' : 'Reguler Standar'}\n` +
+                            `• Target Rank: ${targetRank || '-'} (${priceText})\n` +
+                            `• Akun Moonton: ${account}\n` +
+                            `• Password Moonton: ${pass}\n` +
+                            `• No WhatsApp: ${phone}\n` +
+                            `• Alasan Memilih: ${reason || '-'}\n` +
+                            `• Catatan Joki: ${feedback || '-'}`;
+
+            window.open(`https://wa.me/6282122905448?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
