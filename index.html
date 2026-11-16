@@ -1,0 +1,1138 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vallz Store – Official Top Up & Joki Gaming Store</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Plus Jakarta Sans & Orbitron -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#EFF6FF',
+                            100: '#DBEAFE',
+                            200: '#BFDBFE',
+                            300: '#93C5FD',
+                            400: '#60A5FA',
+                            500: '#2563EB',
+                            600: '#1D4ED8',
+                            700: '#1E40AF',
+                            cyan: '#0EA5E9'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                        display: ['Orbitron', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Clean Card Surfaces for Light & Dark Mode */
+        .store-card {
+            transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+        .store-card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Primary Blue Gradient */
+        .blue-primary-bg {
+            background: linear-gradient(135deg, #2563EB 0%, #0EA5E9 100%);
+        }
+        .blue-primary-bg:hover {
+            background: linear-gradient(135deg, #1D4ED8 0%, #0284C7 100%);
+        }
+
+        /* Active Selection Card State */
+        .item-selected {
+            border-color: #2563EB !important;
+            background-color: rgba(37, 99, 235, 0.08) !important;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.25);
+        }
+        .dark .item-selected {
+            border-color: #38BDF8 !important;
+            background-color: rgba(14, 165, 233, 0.16) !important;
+            box-shadow: 0 0 0 2px rgba(56, 189, 248, 0.3);
+        }
+
+        /* Like & Dislike Keyframe Animations */
+        @keyframes thumbPop {
+            0% { transform: scale(1) rotate(0deg); }
+            35% { transform: scale(1.45) rotate(-16deg); }
+            65% { transform: scale(0.9) rotate(8deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        @keyframes thumbDownShake {
+            0% { transform: scale(1) rotate(0deg); }
+            35% { transform: scale(1.4) rotate(16deg); }
+            65% { transform: scale(0.9) rotate(-8deg); }
+            100% { transform: scale(1) rotate(0deg); }
+        }
+        @keyframes floatPlusOne {
+            0% { opacity: 1; transform: translateY(0) scale(0.85); }
+            100% { opacity: 0; transform: translateY(-24px) scale(1.15); }
+        }
+        .animate-like-pop {
+            animation: thumbPop 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .animate-dislike-pop {
+            animation: thumbDownShake 0.45s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .floating-badge {
+            animation: floatPlusOne 0.7s ease-out forwards;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(37, 99, 235, 0.45);
+            border-radius: 9999px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 dark:bg-[#060B19] dark:text-slate-100 selection:bg-brand-500 selection:text-white">
+
+    <!-- Toast Notification -->
+    <div id="toast-alert" class="fixed top-20 left-1/2 -translate-x-1/2 z-50 hidden transition-all duration-300">
+        <div class="bg-slate-900 dark:bg-slate-800 text-white border border-brand-500/50 px-5 py-3 rounded-full shadow-xl flex items-center gap-2.5 text-xs sm:text-sm font-semibold">
+            <span class="w-2.5 h-2.5 rounded-full bg-brand-cyan animate-ping"></span>
+            <span id="toast-message">Pesan sistem</span>
+        </div>
+    </div>
+
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 bg-white/90 dark:bg-[#0B1224]/90 backdrop-blur-lg border-b border-slate-200 dark:border-slate-800 shadow-sm">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
+            <!-- Brand Logo -->
+            <a href="#" onclick="switchTab('home'); return false;" class="flex items-center gap-2.5 group">
+                <div class="w-10 h-10 rounded-xl blue-primary-bg flex items-center justify-center text-white shadow-md shadow-brand-500/25 group-hover:scale-105 transition">
+                    <svg class="w-6 h-6" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M13 10L16 6L20 9L24 6L27 10H13Z" fill="#FFFFFF"/>
+                        <path d="M20 11L32 15.5V23C32 30 26.8 35.5 20 38C13.2 35.5 8 30 8 23V15.5L20 11Z" stroke="#FFFFFF" stroke-width="2.4" fill="rgba(255,255,255,0.12)"/>
+                        <text x="20" y="27.5" text-anchor="middle" fill="#FFFFFF" font-family="Orbitron, sans-serif" font-weight="900" font-size="11">VS</text>
+                    </svg>
+                </div>
+                <div>
+                    <div class="font-display font-extrabold text-sm sm:text-base tracking-tight text-brand-600 dark:text-sky-400 leading-none">
+                        VALLZ STORE
+                    </div>
+                    <div class="text-[11px] text-slate-500 dark:text-slate-400 font-medium mt-0.5 flex items-center gap-1.5">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Official Top Up &amp; Joki
+                    </div>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation Pills -->
+            <nav class="hidden md:flex items-center gap-1 bg-slate-100 dark:bg-slate-900/90 p-1 rounded-full border border-slate-200 dark:border-slate-800">
+                <button onclick="switchTab('home')" class="nav-btn px-4 py-1.5 rounded-full text-xs font-bold transition bg-white dark:bg-brand-500 text-brand-600 dark:text-white shadow-sm" data-target="home">
+                    <i class="fa-solid fa-house mr-1.5"></i>Beranda
+                </button>
+                <button onclick="switchTab('topup')" class="nav-btn px-4 py-1.5 rounded-full text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-white" data-target="topup">
+                    <i class="fa-solid fa-gem mr-1.5"></i>Top Up Game
+                </button>
+                <button onclick="switchTab('joki')" class="nav-btn px-4 py-1.5 rounded-full text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-white" data-target="joki">
+                    <i class="fa-solid fa-trophy mr-1.5"></i>Jasa Joki
+                </button>
+            </nav>
+
+            <!-- Right Controls: Theme Toggle + Admin WA + Mobile Menu -->
+            <div class="flex items-center gap-2">
+                <button onclick="toggleTheme()" id="theme-toggle-btn" aria-label="Ganti Mode Gelap / Terang" title="Ganti Mode Terang / Gelap" class="flex items-center gap-1.5 px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-sky-300 text-xs font-bold transition">
+                    <i id="theme-icon" class="fa-solid fa-moon text-brand-600 dark:text-amber-300"></i>
+                    <span id="theme-label" class="hidden sm:inline">Gelap</span>
+                </button>
+
+                <a href="https://wa.me/6282122905448" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-1.5 px-4 py-2 rounded-xl blue-primary-bg text-white font-bold text-xs shadow-sm transition">
+                    <i class="fa-brands fa-whatsapp text-sm"></i> Admin CS
+                </a>
+
+                <button onclick="toggleMobileMenu()" aria-label="Menu Navigasi" class="md:hidden w-9 h-9 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-slate-200">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Dropdown Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white dark:bg-[#0B1224] border-t border-slate-200 dark:border-slate-800 px-4 py-3 space-y-2 shadow-lg">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="mobile-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-brand-50 dark:bg-brand-500/20 text-brand-600 dark:text-sky-300 font-bold text-xs" data-target="home">
+                <span><i class="fa-solid fa-house mr-2 w-4"></i>Beranda &amp; Daftar Isi</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+            <button onclick="switchTab('topup'); toggleMobileMenu();" class="mobile-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-xs" data-target="topup">
+                <span><i class="fa-solid fa-gem mr-2 w-4"></i>Top Up Diamond MLBB</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+            <button onclick="switchTab('joki'); toggleMobileMenu();" class="mobile-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-xs" data-target="joki">
+                <span><i class="fa-solid fa-trophy mr-2 w-4"></i>Jasa Joki Per Bintang</span>
+                <i class="fa-solid fa-chevron-right text-[10px]"></i>
+            </button>
+            <a href="https://wa.me/6282122905448" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl blue-primary-bg text-white font-bold text-xs">
+                <i class="fa-brands fa-whatsapp text-sm"></i> Hubungi Admin (082122905448)
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <main class="flex-grow max-w-5xl w-full mx-auto px-4 py-6 space-y-6">
+
+        <!-- =================================================================
+             SECTION 1: BERANDA (HOME)
+        ================================================================== -->
+        <section id="section-home" class="space-y-6">
+
+            <!-- 01. Hero Banner -->
+            <div id="toc-beranda" class="rounded-3xl blue-primary-bg text-white p-6 sm:p-9 relative overflow-hidden shadow-lg shadow-brand-500/20">
+                <div class="absolute -right-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div class="absolute right-8 top-6 opacity-15 text-8xl hidden sm:block pointer-events-none">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+
+                <div class="relative z-10 max-w-2xl space-y-4">
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-md border border-white/25 text-xs font-semibold">
+                        <span class="w-2 h-2 rounded-full bg-emerald-300 animate-ping"></span>
+                        ⚡ Proses Otomatis 1–3 Detik • Buka 24 Jam Nonstop
+                    </div>
+                    <h1 class="text-2xl sm:text-4xl font-extrabold tracking-tight leading-tight">
+                        Top Up Diamond &amp; Jasa Joki Per Bintang Terpercaya
+                    </h1>
+                    <p class="text-xs sm:text-sm text-blue-50 leading-relaxed max-w-xl">
+                        Selamat datang di <strong>Vallz Store</strong>. Nikmati kemudahan top up diamond cukup dengan User ID &amp; Zone ID tanpa ribet, serta layanan joki rank hitungan per bintang oleh pro player berpengalaman.
+                    </p>
+                    <div class="flex flex-wrap gap-3 pt-2">
+                        <button onclick="switchTab('topup')" class="px-5 py-3 rounded-xl bg-white text-brand-600 hover:bg-blue-50 font-extrabold text-xs sm:text-sm shadow-md transition flex items-center gap-2">
+                            <i class="fa-solid fa-gem"></i> Top Up Sekarang
+                        </button>
+                        <button onclick="switchTab('joki')" class="px-5 py-3 rounded-xl bg-brand-700/60 hover:bg-brand-700 text-white border border-white/25 font-bold text-xs sm:text-sm transition flex items-center gap-2">
+                            <i class="fa-solid fa-star text-amber-300"></i> Order Joki Per Bintang
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DAFTAR ISI (TABLE OF CONTENTS) -->
+            <div class="bg-white dark:bg-[#0F172A] rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-2.5">
+                        <div class="w-8 h-8 rounded-lg bg-brand-50 dark:bg-brand-500/15 text-brand-600 dark:text-sky-400 flex items-center justify-center">
+                            <i class="fa-solid fa-list-ul"></i>
+                        </div>
+                        <div>
+                            <h2 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">Daftar Isi Navigasi Store</h2>
+                            <p class="text-[11px] text-slate-500 dark:text-slate-400">Klik menu di bawah untuk langsung menuju bagian yang Anda cari</p>
+                        </div>
+                    </div>
+                    <span class="text-[11px] font-bold px-2.5 py-1 rounded-full bg-brand-50 dark:bg-sky-500/10 text-brand-600 dark:text-sky-400">5 Bagian</span>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
+                    <button onclick="navigateToSection('home', 'toc-beranda')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-brand-50 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-left transition group">
+                        <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-bold text-xs flex items-center justify-center shrink-0">01</span>
+                        <div class="min-w-0">
+                            <div class="text-xs font-bold text-slate-800 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 truncate">Beranda &amp; Promo Utama</div>
+                            <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Info toko &amp; penawaran spesial</div>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('topup')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-brand-50 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-left transition group">
+                        <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-bold text-xs flex items-center justify-center shrink-0">02</span>
+                        <div class="min-w-0">
+                            <div class="text-xs font-bold text-slate-800 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 truncate">Top Up Diamond MLBB</div>
+                            <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">22 paket diamond via User ID</div>
+                        </div>
+                    </button>
+
+                    <button onclick="switchTab('joki')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-brand-50 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-left transition group">
+                        <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-bold text-xs flex items-center justify-center shrink-0">03</span>
+                        <div class="min-w-0">
+                            <div class="text-xs font-bold text-slate-800 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 truncate">Jasa Joki Per Bintang (⭐)</div>
+                            <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Harga per bintang + kalkulator</div>
+                        </div>
+                    </button>
+
+                    <button onclick="navigateToSection('home', 'toc-ulasan')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-brand-50 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-left transition group">
+                        <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-bold text-xs flex items-center justify-center shrink-0">04</span>
+                        <div class="min-w-0">
+                            <div class="text-xs font-bold text-slate-800 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 truncate">Rating, Ulasan &amp; Feedback</div>
+                            <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">Testimoni &amp; tombol suka</div>
+                        </div>
+                    </button>
+
+                    <button onclick="navigateToSection('home', 'toc-kontak')" class="flex items-center gap-3 p-3 rounded-xl bg-slate-50 hover:bg-brand-50 dark:bg-slate-800/60 dark:hover:bg-slate-800 border border-slate-200/80 dark:border-slate-700/80 text-left transition group sm:col-span-2 lg:col-span-2">
+                        <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-bold text-xs flex items-center justify-center shrink-0">05</span>
+                        <div class="min-w-0">
+                            <div class="text-xs font-bold text-slate-800 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 truncate">Customer Service &amp; Kontak Admin 24 Jam</div>
+                            <div class="text-[10px] text-slate-500 dark:text-slate-400 truncate">WhatsApp 082122905448, Instagram &amp; Email resmi</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Layanan Populer Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div onclick="switchTab('topup')" class="store-card bg-white dark:bg-[#0F172A] rounded-2xl p-5 border border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-sky-400 shadow-sm cursor-pointer flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl blue-primary-bg text-white flex items-center justify-center text-2xl shadow-md shrink-0">
+                            <i class="fa-solid fa-gem"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 transition">Top Up Diamond MLBB</h3>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">Tanpa Login</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Cukup masukkan User ID &amp; Zone ID. Aman &amp; legal 100%.</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-brand-600 dark:group-hover:text-sky-400 transition"></i>
+                </div>
+
+                <div onclick="switchTab('joki')" class="store-card bg-white dark:bg-[#0F172A] rounded-2xl p-5 border border-slate-200 dark:border-slate-800 hover:border-brand-500 dark:hover:border-sky-400 shadow-sm cursor-pointer flex items-center justify-between group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-sky-500 text-white flex items-center justify-center text-2xl shadow-md shrink-0">
+                            <i class="fa-solid fa-star"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="font-bold text-base text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 transition">Jasa Joki Per Bintang</h3>
+                                <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300">Mulai Rp 3rb/⭐</span>
+                            </div>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">Master hingga Mythic Immortal • Bebas tentukan jumlah bintang.</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 group-hover:text-brand-600 dark:group-hover:text-sky-400 transition"></i>
+                </div>
+            </div>
+
+            <!-- 04. Rating, Ulasan & Animated Like/Dislike -->
+            <div id="toc-ulasan" class="bg-white dark:bg-[#0F172A] rounded-2xl p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-5 border-b border-slate-100 dark:border-slate-800">
+                    <div class="flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-2xl bg-brand-50 dark:bg-sky-500/10 border border-brand-200 dark:border-sky-500/30 flex flex-col items-center justify-center shrink-0">
+                            <span class="font-extrabold text-2xl text-brand-600 dark:text-sky-400">4.9</span>
+                            <span class="text-[10px] font-bold text-slate-500 dark:text-slate-400">/ 5.0</span>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-1 text-amber-400 text-xs mb-1">
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <i class="fa-solid fa-star"></i>
+                                <span class="text-slate-500 dark:text-slate-400 ml-1.5 font-medium">(1.250+ Transaksi Sukses)</span>
+                            </div>
+                            <h3 class="font-bold text-base text-slate-900 dark:text-white">Ulasan &amp; Kepuasan Pelanggan</h3>
+                            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">"Top up cukup pakai ID langsung masuk hitungan detik, joki per bintang murah &amp; winrate tinggi!"</p>
+                        </div>
+                    </div>
+
+                    <!-- Animated Toggleable Like & Dislike Buttons -->
+                    <div class="flex flex-col sm:items-end gap-2">
+                        <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Apakah layanan kami membantu?</span>
+                        <div class="flex items-center gap-3">
+                            <div class="relative">
+                                <button type="button" onclick="handleFeedback('like')" id="btn-like" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 dark:bg-slate-800 dark:hover:bg-sky-500/20 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition-all cursor-pointer">
+                                    <i id="icon-like" class="fa-regular fa-thumbs-up text-brand-600 dark:text-sky-400 text-sm transition-transform"></i>
+                                    <span id="like-count">142</span>
+                                </button>
+                                <span id="like-float" class="hidden absolute -top-3 right-2 text-xs font-extrabold text-brand-600 dark:text-sky-400 pointer-events-none">+1</span>
+                            </div>
+
+                            <div class="relative">
+                                <button type="button" onclick="handleFeedback('dislike')" id="btn-dislike" class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 dark:bg-slate-800 dark:hover:bg-rose-500/20 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition-all cursor-pointer">
+                                    <i id="icon-dislike" class="fa-regular fa-thumbs-down text-rose-500 text-sm transition-transform"></i>
+                                    <span id="dislike-count">2</span>
+                                </button>
+                                <span id="dislike-float" class="hidden absolute -top-3 right-2 text-xs font-extrabold text-rose-500 pointer-events-none">+1</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- =================================================================
+             SECTION 2: TOP UP DIAMOND MLBB (USER ID & ZONE ID ONLY)
+        ================================================================== -->
+        <section id="section-topup" class="hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <button onclick="switchTab('home')" aria-label="Kembali ke Beranda" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-sky-400 hover:border-brand-500 transition shadow-sm">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Top Up Diamond Mobile Legends</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Tanpa email &amp; tanpa password — cukup masukkan User ID dan Zone ID Anda</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1.5 rounded-full bg-brand-50 dark:bg-sky-500/15 border border-brand-200 dark:border-sky-500/30 text-brand-600 dark:text-sky-300 font-bold text-xs">
+                    <i class="fa-solid fa-shield-check mr-1"></i> 100% Aman Via ID
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+                <!-- Left Column: Step 1 Pilih Nominal Diamond -->
+                <div class="lg:col-span-7 bg-white dark:bg-[#0F172A] rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-extrabold text-xs flex items-center justify-center">1</span>
+                            <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">Pilih Nominal Diamond</h3>
+                        </div>
+                        <span class="text-xs font-semibold text-brand-600 dark:text-sky-400">22 Paket Tersedia</span>
+                    </div>
+
+                    <!-- Selected Diamond Summary -->
+                    <div class="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-700 flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-brand-100 dark:bg-sky-500/20 text-brand-600 dark:text-sky-400 flex items-center justify-center">
+                                <i class="fa-solid fa-gem"></i>
+                            </div>
+                            <div>
+                                <div class="text-[11px] font-semibold text-slate-500 dark:text-slate-400">Nominal Terpilih</div>
+                                <div id="selected-diamond-info" class="text-xs sm:text-sm font-bold text-slate-900 dark:text-white">Belum dipilih (Klik salah satu paket)</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 22 Diamond Grid -->
+                    <div id="diamond-grid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[420px] overflow-y-auto pr-1">
+                        <!-- Rendered via JS -->
+                    </div>
+                </div>
+
+                <!-- Right Column: Step 2 Masukkan Data Akun (User ID & Zone ID Only) -->
+                <div class="lg:col-span-5 lg:sticky lg:top-20 bg-white dark:bg-[#0F172A] rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center gap-2.5 mb-5">
+                        <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-extrabold text-xs flex items-center justify-center">2</span>
+                        <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">Masukkan Data Akun</h3>
+                    </div>
+
+                    <form id="form-topup" onsubmit="submitTopup(event)" class="space-y-4">
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="col-span-2">
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">User ID (Wajib)</label>
+                                <input type="text" inputmode="numeric" id="topup-userid" required placeholder="Contoh: 12345678" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                            </div>
+                            <div class="col-span-1">
+                                <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Zone ID (Wajib)</label>
+                                <input type="text" inputmode="numeric" id="topup-zoneid" required placeholder="2010" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                            </div>
+                        </div>
+
+                        <p class="text-[11px] text-slate-500 dark:text-slate-400 bg-brand-50/70 dark:bg-sky-500/10 border border-brand-100 dark:border-sky-500/20 rounded-xl p-2.5">
+                            <i class="fa-solid fa-circle-info text-brand-600 dark:text-sky-400 mr-1"></i> Untuk menemukan ID Anda, klik profil di pojok kiri atas layar game MLBB, lalu lihat angka di bawah nama profil Anda (contoh: <strong>12345678 (2010)</strong>).
+                        </p>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Nomor WhatsApp Pembeli (Wajib)</label>
+                            <input type="tel" id="topup-phone" required placeholder="Contoh: 082122905448" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Alasan Memilih Vallz Store</label>
+                            <select id="topup-reason" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                                <option value="">Pilih satu opsi (opsional)</option>
+                                <option value="Harga Termurah">Harga Termurah</option>
+                                <option value="Proses Cepat & Otomatis">Proses Cepat &amp; Otomatis</option>
+                                <option value="Aman Cukup Pakai ID">Aman Cukup Pakai ID</option>
+                                <option value="Rekomendasi Teman">Rekomendasi Teman</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Catatan / Saran</label>
+                            <textarea id="topup-feedback" rows="2" placeholder="Tulis catatan tambahan jika ada..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none transition"></textarea>
+                        </div>
+
+                        <button type="submit" class="w-full py-3.5 rounded-xl blue-primary-bg text-white font-extrabold text-xs sm:text-sm shadow-md shadow-brand-500/25 flex items-center justify-center gap-2 transition">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Beli Sekarang via WhatsApp
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- =================================================================
+             SECTION 3: JASA JOKI RANK PER BINTANG (⭐)
+        ================================================================== -->
+        <section id="section-joki" class="hidden space-y-6">
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <button onclick="switchTab('home')" aria-label="Kembali ke Beranda" class="w-10 h-10 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-sky-400 hover:border-brand-500 transition shadow-sm">
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                    <div>
+                        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">Jasa Joki Rank Per Bintang (⭐)</h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">Harga dihitung per bintang • Bebas tentukan jumlah bintang sesuai kebutuhan</p>
+                    </div>
+                </div>
+                <span class="px-3 py-1.5 rounded-full bg-amber-50 dark:bg-amber-500/15 border border-amber-200 dark:border-amber-500/30 text-amber-700 dark:text-amber-300 font-bold text-xs">
+                    <i class="fa-solid fa-star text-amber-500 mr-1"></i> Tarif Per Bintang
+                </span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+                <!-- Left Column: Katalog Harga Per Bintang per Tier Rank -->
+                <div class="lg:col-span-7 bg-white dark:bg-[#0F172A] rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm space-y-5">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-extrabold text-xs flex items-center justify-center">1</span>
+                            <div>
+                                <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">Pilih Tier Rank (Tarif / ⭐)</h3>
+                                <p id="catalog-subtitle" class="text-[11px] text-brand-600 dark:text-sky-400 font-semibold">Mode: Reguler Standar (Per Bintang)</p>
+                            </div>
+                        </div>
+
+                        <!-- Mode Switcher -->
+                        <div class="grid grid-cols-2 p-1 rounded-xl bg-slate-100 dark:bg-slate-900 border border-slate-200 dark:border-slate-700">
+                            <button type="button" onclick="setJokiMode('reguler')" id="btn-mode-reguler" class="px-3 py-1.5 rounded-lg blue-primary-bg text-white font-bold text-xs transition">
+                                Reguler / ⭐
+                            </button>
+                            <button type="button" onclick="setJokiMode('express')" id="btn-mode-express" class="px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 font-bold text-xs transition">
+                                Express / ⭐ ⚡
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 8 Tier Rank Cards (Per Bintang) -->
+                    <div id="joki-rank-grid" class="grid grid-cols-2 gap-3.5">
+                        <!-- Rendered via JS -->
+                    </div>
+
+                    <!-- Info Note -->
+                    <div class="p-3.5 rounded-xl bg-brand-50/70 dark:bg-sky-500/10 border border-brand-100 dark:border-sky-500/20 text-xs text-slate-600 dark:text-slate-300 flex items-start gap-2.5">
+                        <i class="fa-solid fa-calculator text-brand-600 dark:text-sky-400 mt-0.5"></i>
+                        <div>
+                            <strong>Sistem Hitungan Per Bintang:</strong> Klik salah satu tier rank di atas, lalu atur jumlah bintang (⭐) yang diinginkan pada formulir di samping. Total biaya otomatis terhitung!
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Form Order Joki + Kalkulator Jumlah Bintang -->
+                <div class="lg:col-span-5 lg:sticky lg:top-20 bg-white dark:bg-[#0F172A] rounded-2xl p-5 sm:p-6 border border-slate-200 dark:border-slate-800 shadow-sm">
+                    <div class="flex items-center gap-2.5 mb-5">
+                        <span class="w-7 h-7 rounded-lg blue-primary-bg text-white font-extrabold text-xs flex items-center justify-center">2</span>
+                        <h3 class="font-bold text-sm sm:text-base text-slate-900 dark:text-white">Formulir Order Joki</h3>
+                    </div>
+
+                    <form id="form-joki" onsubmit="submitJoki(event)" class="space-y-3.5">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Login Akun Moonton (Wajib)</label>
+                            <input type="text" id="joki-account" required placeholder="Email / Username Moonton" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Password Moonton (Wajib)</label>
+                            <input type="password" id="joki-pass" required placeholder="Password Akun" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Nomor WhatsApp Anda (Wajib)</label>
+                            <input type="tel" id="joki-phone" required placeholder="Contoh: 082122905448" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Jenis Layanan Joki</label>
+                            <select id="joki-type" onchange="updateJokiPricing()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm font-bold text-brand-600 dark:text-sky-400 focus:outline-none transition">
+                                <option value="reguler">Reguler Standar (Per Bintang)</option>
+                                <option value="express">Express Kilat Min 2 Hari (Per Bintang) ⚡</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Pilih Tier Rank (Wajib)</label>
+                            <select id="joki-target-rank" required onchange="syncRankSelectionFromDropdown()" class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                                <option value="">Pilih tier rank (atau klik kartu di kiri)</option>
+                                <option value="Master">Master (⭐⭐⭐)</option>
+                                <option value="Grand Master">Grand Master (⭐⭐⭐⭐)</option>
+                                <option value="Epic">Epic (⭐⭐⭐⭐⭐)</option>
+                                <option value="Legends">Legends (⭐⭐⭐⭐⭐)</option>
+                                <option value="Mythic Grading">Mythic Grading (⭐ Placement)</option>
+                                <option value="Mythic Honor">Mythic Honor (🌟 25–49 ⭐)</option>
+                                <option value="Mythic Glory">Mythic Glory (🌟 50–99 ⭐)</option>
+                                <option value="Mythic Immortal">Mythic Immortal (👑 100+ ⭐)</option>
+                            </select>
+                        </div>
+
+                        <!-- Interactive Star Quantity Stepper -->
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Jumlah Order Bintang (⭐)</label>
+                            <div class="flex items-center gap-2">
+                                <button type="button" onclick="adjustStars(-1)" aria-label="Kurangi Bintang" class="w-11 h-11 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 font-extrabold text-base text-slate-700 dark:text-white transition">
+                                    -
+                                </button>
+                                <div class="relative flex-grow">
+                                    <input type="number" id="joki-stars" min="1" max="500" value="5" oninput="calculateJokiTotal()" required class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2.5 text-center font-extrabold text-sm text-slate-900 dark:text-white focus:outline-none transition">
+                                    <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-xs font-bold text-amber-500 pointer-events-none">⭐ Bintang</span>
+                                </div>
+                                <button type="button" onclick="adjustStars(1)" aria-label="Tambah Bintang" class="w-11 h-11 rounded-xl bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 border border-slate-300 dark:border-slate-700 font-extrabold text-base text-slate-700 dark:text-white transition">
+                                    +
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Live Total Price Summary Box -->
+                        <div class="p-3.5 rounded-xl bg-brand-50 dark:bg-sky-500/10 border border-brand-200 dark:border-sky-500/30 flex items-center justify-between">
+                            <div>
+                                <div class="text-[11px] font-semibold text-slate-600 dark:text-slate-300">Estimasi Total Biaya</div>
+                                <div id="joki-price-breakdown" class="text-[10px] text-slate-500 dark:text-slate-400">Pilih tier rank untuk melihat rincian</div>
+                            </div>
+                            <div id="joki-total-price" class="font-extrabold text-base sm:text-lg text-brand-600 dark:text-sky-400">
+                                Rp 0
+                            </div>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-bold text-slate-700 dark:text-slate-300 mb-1.5">Catatan / Request Hero</label>
+                            <textarea id="joki-feedback" rows="2" placeholder="Request hero atau jadwal login akun..." class="w-full bg-slate-50 dark:bg-slate-900 border border-slate-300 dark:border-slate-700 focus:border-brand-500 dark:focus:border-sky-400 rounded-xl px-3.5 py-2 text-sm text-slate-900 dark:text-white focus:outline-none transition"></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3.5 rounded-xl blue-primary-bg text-white font-extrabold text-xs sm:text-sm shadow-md shadow-brand-500/25 flex items-center justify-center gap-2 transition">
+                            <i class="fa-brands fa-whatsapp text-base"></i> Order Joki via WhatsApp
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Customer Service Widget -->
+    <div class="fixed bottom-5 right-5 z-50 flex flex-col items-end">
+        <div id="cs-popup" class="hidden mb-3 w-72 sm:w-80 bg-white dark:bg-[#0F172A] rounded-2xl p-4 border border-slate-200 dark:border-slate-700 shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-slate-100 dark:border-slate-800 mb-3">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl blue-primary-bg text-white flex items-center justify-center text-sm">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <div>
+                        <div class="font-bold text-slate-900 dark:text-white text-xs">Customer Service Vallz</div>
+                        <div class="text-[11px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 font-semibold">
+                            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span> Online 24 Jam
+                        </div>
+                    </div>
+                </div>
+                <button onclick="toggleCsPopup()" aria-label="Tutup CS" class="w-7 h-7 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-500 hover:text-slate-900 dark:hover:text-white flex items-center justify-center text-xs transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="bg-slate-50 dark:bg-slate-900 p-3 rounded-xl border border-slate-200/70 dark:border-slate-800 text-xs text-slate-600 dark:text-slate-300 leading-relaxed mb-3">
+                Halo! Ada yang bisa kami bantu seputar <strong>Top Up Diamond MLBB</strong> atau <strong>Jasa Joki Per Bintang</strong>? Admin siap melayani 24/7!
+            </div>
+            <a href="https://wa.me/6282122905448?text=Halo%20Admin%20Vallz%20Store,%20saya%20ingin%20bertanya%20mengenai%20layanan." target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl blue-primary-bg text-white font-bold text-xs shadow-sm">
+                <i class="fa-brands fa-whatsapp text-sm"></i> Chat CS (082122905448)
+            </a>
+        </div>
+
+        <button onclick="toggleCsPopup()" aria-label="Buka Customer Service" class="w-14 h-14 rounded-2xl blue-primary-bg text-white shadow-xl shadow-brand-500/35 flex items-center justify-center text-2xl hover:scale-105 transition relative group">
+            <i class="fa-solid fa-headset group-hover:rotate-12 transition-transform"></i>
+            <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-400 border-2 border-white dark:border-[#060B19] rounded-full"></span>
+        </button>
+    </div>
+
+    <!-- 05. Footer & Kontak Admin -->
+    <footer id="toc-kontak" class="mt-14 bg-white dark:bg-[#0B1224] border-t border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-xs">
+        <div class="max-w-5xl mx-auto px-4 py-10">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 pb-8 border-b border-slate-200 dark:border-slate-800">
+
+                <!-- Brand -->
+                <div class="space-y-3">
+                    <div class="font-display font-extrabold text-base text-brand-600 dark:text-sky-400">VALLZ STORE</div>
+                    <p class="text-xs leading-relaxed">
+                        Platform Top Up Diamond Mobile Legends &amp; Jasa Joki Per Bintang terpercaya dengan proses instan, aman, dan layanan pelanggan 24 jam nonstop.
+                    </p>
+                    <div class="flex items-center gap-2.5 pt-1">
+                        <a href="https://wa.me/6282122905448" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" class="w-9 h-9 rounded-xl bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white flex items-center justify-center transition">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.instagram.com/vallzz_store165" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="w-9 h-9 rounded-xl bg-pink-50 dark:bg-pink-500/10 border border-pink-200 dark:border-pink-500/30 text-pink-600 dark:text-pink-400 hover:bg-pink-500 hover:text-white flex items-center justify-center transition">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="mailto:adisnoval126@gmail.com" aria-label="Gmail" class="w-9 h-9 rounded-xl bg-brand-50 dark:bg-sky-500/10 border border-brand-200 dark:border-sky-500/30 text-brand-600 dark:text-sky-400 hover:bg-brand-500 hover:text-white flex items-center justify-center transition">
+                            <i class="fa-solid fa-envelope"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Lokasi -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">Lokasi Store</h4>
+                    <p>Jalan Bonang 23510</p>
+                    <p>Grubug SR 2 NO 22</p>
+                </div>
+
+                <!-- Jam Operasional -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">Jam Operasional</h4>
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 dark:bg-emerald-500/10 border border-emerald-200 dark:border-emerald-500/30 text-emerald-700 dark:text-emerald-400 font-bold">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-ping"></span> 24 Jam Nonstop
+                    </div>
+                    <p>Senin s.d. Minggu (Setiap Hari)</p>
+                </div>
+
+                <!-- Kontak Admin -->
+                <div class="space-y-2">
+                    <h4 class="font-bold text-sm text-slate-900 dark:text-white">Kontak &amp; Email</h4>
+                    <p>
+                        <a href="mailto:adisnoval126@gmail.com" class="text-brand-600 dark:text-sky-400 hover:underline font-medium">adisnoval126@gmail.com</a>
+                    </p>
+                    <p>
+                        WhatsApp: <a href="https://wa.me/6282122905448" target="_blank" rel="noopener noreferrer" class="font-bold text-slate-900 dark:text-white hover:text-brand-600 dark:hover:text-sky-400">082122905448</a>
+                    </p>
+                    <p>
+                        Instagram: <a href="https://www.instagram.com/vallzz_store165" target="_blank" rel="noopener noreferrer" class="text-brand-600 dark:text-sky-400 hover:underline">@vallzz_store165</a>
+                    </p>
+                </div>
+
+            </div>
+
+            <div class="pt-6 text-center text-[11px] text-slate-500 dark:text-slate-400">
+                By Vallz — All Rights Reserved &copy; 2026
+            </div>
+        </div>
+    </footer>
+
+    <!-- Interactive JavaScript -->
+    <script>
+        // 22 Diamond MLBB Packages
+        const diamondItems = [
+            { id: 1, count: "5", bonus: "+0", price: "Rp 1.500" },
+            { id: 2, count: "10", bonus: "+1", price: "Rp 2.900" },
+            { id: 3, count: "19", bonus: "+2", price: "Rp 5.500" },
+            { id: 4, count: "28", bonus: "+3", price: "Rp 7.900" },
+            { id: 5, count: "36", bonus: "+4", price: "Rp 9.900" },
+            { id: 6, count: "44", bonus: "+5", price: "Rp 12.500" },
+            { id: 7, count: "59", bonus: "+6", price: "Rp 16.500" },
+            { id: 8, count: "85", bonus: "+9", price: "Rp 23.500" },
+            { id: 9, count: "110", bonus: "+11", price: "Rp 29.900" },
+            { id: 10, count: "144", bonus: "+15", price: "Rp 38.900" },
+            { id: 11, count: "170", bonus: "+18", price: "Rp 45.900" },
+            { id: 12, count: "222", bonus: "+23", price: "Rp 59.900" },
+            { id: 13, count: "284", bonus: "+30", price: "Rp 76.900" },
+            { id: 14, count: "355", bonus: "+38", price: "Rp 95.900" },
+            { id: 15, count: "429", bonus: "+45", price: "Rp 115.000" },
+            { id: 16, count: "514", bonus: "+55", price: "Rp 138.000" },
+            { id: 17, count: "565", bonus: "+60", price: "Rp 152.000" },
+            { id: 18, count: "716", bonus: "+75", price: "Rp 189.000" },
+            { id: 19, count: "878", bonus: "+92", price: "Rp 232.000" },
+            { id: 20, count: "963", bonus: "+101", price: "Rp 254.000" },
+            { id: 21, count: "1050", bonus: "+110", price: "Rp 278.000" },
+            { id: 22, count: "1220", bonus: "+130", price: "Rp 322.000" }
+        ];
+
+        // 8 Jasa Joki Rank Cards (Tarif Per Bintang / ⭐)
+        const jokiRanks = [
+            { rank: "Master", regulerPrice: 3000, expressPrice: 5000, badge: "⭐⭐⭐" },
+            { rank: "Grand Master", regulerPrice: 4000, expressPrice: 7000, badge: "⭐⭐⭐⭐" },
+            { rank: "Epic", regulerPrice: 5000, expressPrice: 9000, badge: "⭐⭐⭐⭐⭐" },
+            { rank: "Legends", regulerPrice: 6000, expressPrice: 11000, badge: "⭐⭐⭐⭐⭐" },
+            { rank: "Mythic Grading", regulerPrice: 15000, expressPrice: 25000, badge: "⭐ Placement / Match" },
+            { rank: "Mythic Honor", regulerPrice: 18000, expressPrice: 30000, badge: "🌟 25–49 ⭐" },
+            { rank: "Mythic Glory", regulerPrice: 22000, expressPrice: 38000, badge: "🌟 50–99 ⭐" },
+            { rank: "Mythic Immortal", regulerPrice: 28000, expressPrice: 48000, badge: "👑 100+ ⭐" }
+        ];
+
+        let selectedDiamond = null;
+        let currentJokiMode = 'reguler';
+        let selectedRankCard = null;
+        let toastTimer = null;
+
+        function formatRupiah(amount) {
+            return 'Rp ' + amount.toLocaleString('id-ID');
+        }
+
+        // Dark / Light Mode Logic (Default: Light Blue & White)
+        function initTheme() {
+            const savedTheme = localStorage.getItem('vallz-theme');
+            if (savedTheme === 'dark') {
+                document.documentElement.classList.add('dark');
+                updateThemeUI(true);
+            } else {
+                document.documentElement.classList.remove('dark');
+                updateThemeUI(false);
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.classList.toggle('dark');
+            localStorage.setItem('vallz-theme', isDark ? 'dark' : 'light');
+            updateThemeUI(isDark);
+            showToast(isDark ? 'Mode Gelap aktif' : 'Mode Terang (Biru & Putih) aktif');
+        }
+
+        function updateThemeUI(isDark) {
+            const icon = document.getElementById('theme-icon');
+            const label = document.getElementById('theme-label');
+            if (!icon || !label) return;
+            if (isDark) {
+                icon.className = 'fa-solid fa-sun text-amber-400';
+                label.innerText = 'Terang';
+            } else {
+                icon.className = 'fa-solid fa-moon text-brand-600';
+                label.innerText = 'Gelap';
+            }
+        }
+
+        function showToast(text) {
+            const toast = document.getElementById('toast-alert');
+            const msg = document.getElementById('toast-message');
+            if (!toast || !msg) return;
+
+            msg.innerText = text;
+            toast.classList.remove('hidden');
+
+            if (toastTimer) clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 3000);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderDiamonds();
+            renderJokiRanks();
+            calculateJokiTotal();
+        });
+
+        function renderDiamonds() {
+            const grid = document.getElementById('diamond-grid');
+            grid.innerHTML = diamondItems.map(item => `
+                <div onclick="selectDiamond(${item.id})" id="diamond-card-${item.id}" class="diamond-item bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-3.5 cursor-pointer hover:border-brand-500 dark:hover:border-sky-400 transition-all flex flex-col justify-between group">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="w-7 h-7 rounded-lg bg-brand-100 dark:bg-sky-500/15 text-brand-600 dark:text-sky-400 flex items-center justify-center text-xs group-hover:scale-110 transition">
+                            <i class="fa-solid fa-gem"></i>
+                        </span>
+                        <span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-300">
+                            ${item.bonus}
+                        </span>
+                    </div>
+                    <div>
+                        <div class="font-bold text-slate-900 dark:text-white text-xs sm:text-sm">${item.count} <span class="text-[11px] font-normal text-slate-500 dark:text-slate-400">Diamonds</span></div>
+                        <div class="text-xs font-extrabold text-brand-600 dark:text-sky-400 mt-1">${item.price}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function selectDiamond(id) {
+            document.querySelectorAll('.diamond-item').forEach(el => {
+                el.classList.remove('item-selected');
+            });
+            const card = document.getElementById(`diamond-card-${id}`);
+            if (card) card.classList.add('item-selected');
+
+            selectedDiamond = diamondItems.find(i => i.id === id);
+            document.getElementById('selected-diamond-info').innerHTML = `<span class="text-brand-600 dark:text-sky-400">${selectedDiamond.count} Diamonds</span> (${selectedDiamond.bonus}) — ${selectedDiamond.price}`;
+        }
+
+        function renderJokiRanks() {
+            const grid = document.getElementById('joki-rank-grid');
+            grid.innerHTML = jokiRanks.map((j, index) => {
+                const unitPrice = currentJokiMode === 'express' ? j.expressPrice : j.regulerPrice;
+                const isSelected = selectedRankCard === j.rank;
+                const activeClass = isSelected ? 'item-selected' : '';
+
+                return `
+                    <div onclick="selectRankCard('${j.rank}')" id="rank-card-${index}" class="rank-card ${activeClass} bg-slate-50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl p-4 cursor-pointer hover:border-brand-500 dark:hover:border-sky-400 transition-all flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between gap-1 mb-1">
+                                <span class="font-bold text-xs sm:text-sm text-slate-900 dark:text-white group-hover:text-brand-600 dark:group-hover:text-sky-400 transition">${j.rank}</span>
+                                ${currentJokiMode === 'express' ? '<span class="text-[9px] px-1.5 py-0.5 rounded bg-amber-100 dark:bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold">⚡ Kilat</span>' : ''}
+                            </div>
+                            <div class="text-[11px] text-amber-500 font-medium">${j.badge}</div>
+                        </div>
+                        <div class="pt-2.5 mt-2.5 border-t border-slate-200/70 dark:border-slate-800 flex items-center justify-between">
+                            <span class="font-extrabold text-xs sm:text-sm text-brand-600 dark:text-sky-400">${formatRupiah(unitPrice)} <span class="text-[10px] font-semibold text-slate-500 dark:text-slate-400">/ ⭐</span></span>
+                            <i class="fa-solid fa-circle-check text-slate-300 dark:text-slate-600 group-hover:text-brand-600 dark:group-hover:text-sky-400 text-xs transition"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function selectRankCard(rankName) {
+            selectedRankCard = rankName;
+            document.getElementById('joki-target-rank').value = rankName;
+            highlightRankCards();
+            calculateJokiTotal();
+            showToast(`Tier dipilih: ${rankName}`);
+        }
+
+        function syncRankSelectionFromDropdown() {
+            selectedRankCard = document.getElementById('joki-target-rank').value;
+            highlightRankCards();
+            calculateJokiTotal();
+        }
+
+        function highlightRankCards() {
+            jokiRanks.forEach((j, index) => {
+                const card = document.getElementById(`rank-card-${index}`);
+                if (card) {
+                    if (j.rank === selectedRankCard) {
+                        card.classList.add('item-selected');
+                    } else {
+                        card.classList.remove('item-selected');
+                    }
+                }
+            });
+        }
+
+        function adjustStars(delta) {
+            const starInput = document.getElementById('joki-stars');
+            if (!starInput) return;
+            let current = parseInt(starInput.value, 10) || 1;
+            current = Math.max(1, Math.min(500, current + delta));
+            starInput.value = current;
+            calculateJokiTotal();
+        }
+
+        function calculateJokiTotal() {
+            const rankName = document.getElementById('joki-target-rank').value;
+            const starInput = document.getElementById('joki-stars');
+            const totalEl = document.getElementById('joki-total-price');
+            const breakdownEl = document.getElementById('joki-price-breakdown');
+            const stars = Math.max(1, parseInt(starInput.value, 10) || 1);
+
+            if (!rankName) {
+                totalEl.innerText = 'Rp 0';
+                breakdownEl.innerText = 'Pilih tier rank untuk menghitung total';
+                return;
+            }
+
+            const foundRank = jokiRanks.find(r => r.rank === rankName);
+            if (!foundRank) return;
+
+            const unitPrice = currentJokiMode === 'express' ? foundRank.expressPrice : foundRank.regulerPrice;
+            const totalPrice = unitPrice * stars;
+
+            totalEl.innerText = formatRupiah(totalPrice);
+            breakdownEl.innerText = `${stars} ⭐ × ${formatRupiah(unitPrice)} (${foundRank.rank})`;
+        }
+
+        function setJokiMode(mode) {
+            currentJokiMode = mode;
+            const selectEl = document.getElementById('joki-type');
+            if (selectEl) selectEl.value = mode;
+
+            const btnReg = document.getElementById('btn-mode-reguler');
+            const btnExp = document.getElementById('btn-mode-express');
+            const subtitle = document.getElementById('catalog-subtitle');
+
+            if (mode === 'express') {
+                btnExp.className = "px-3 py-1.5 rounded-lg blue-primary-bg text-white font-bold text-xs transition";
+                btnReg.className = "px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 font-bold text-xs transition";
+                subtitle.innerText = "Mode: Express Kilat Per Bintang ⚡";
+            } else {
+                btnReg.className = "px-3 py-1.5 rounded-lg blue-primary-bg text-white font-bold text-xs transition";
+                btnExp.className = "px-3 py-1.5 rounded-lg text-slate-600 dark:text-slate-300 font-bold text-xs transition";
+                subtitle.innerText = "Mode: Reguler Standar (Per Bintang)";
+            }
+            renderJokiRanks();
+            calculateJokiTotal();
+        }
+
+        function updateJokiPricing() {
+            const selectEl = document.getElementById('joki-type');
+            setJokiMode(selectEl.value);
+        }
+
+        // Tab Switching & Table of Contents Jump
+        function switchTab(tabName, scrollToTop = true) {
+            ['home', 'topup', 'joki'].forEach(t => {
+                const el = document.getElementById(`section-${t}`);
+                if (el) el.classList.add('hidden');
+            });
+
+            const targetEl = document.getElementById(`section-${tabName}`);
+            if (targetEl) targetEl.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.target === tabName) {
+                    btn.className = "nav-btn px-4 py-1.5 rounded-full text-xs font-bold transition bg-white dark:bg-brand-500 text-brand-600 dark:text-white shadow-sm";
+                } else {
+                    btn.className = "nav-btn px-4 py-1.5 rounded-full text-xs font-semibold transition text-slate-600 dark:text-slate-300 hover:text-brand-600 dark:hover:text-white";
+                }
+            });
+
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                if (btn.dataset.target === tabName) {
+                    btn.className = "mobile-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl bg-brand-50 dark:bg-brand-500/20 text-brand-600 dark:text-sky-300 font-bold text-xs";
+                } else {
+                    btn.className = "mobile-nav-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 font-semibold text-xs";
+                }
+            });
+
+            if (scrollToTop) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function navigateToSection(tabName, elementId) {
+            switchTab(tabName, false);
+            setTimeout(() => {
+                const target = document.getElementById(elementId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 40);
+        }
+
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
+
+        function toggleCsPopup() {
+            document.getElementById('cs-popup').classList.toggle('hidden');
+        }
+
+        // Animated Toggleable Like & Dislike
+        let userVote = null;
+        let baseLikes = 142;
+        let baseDislikes = 2;
+
+        function triggerFloatingIndicator(elementId, text) {
+            const el = document.getElementById(elementId);
+            if (!el) return;
+            el.innerText = text;
+            el.classList.remove('hidden', 'floating-badge');
+            void el.offsetWidth;
+            el.classList.add('floating-badge');
+            setTimeout(() => el.classList.add('hidden'), 700);
+        }
+
+        function handleFeedback(type) {
+            const btnLike = document.getElementById('btn-like');
+            const btnDislike = document.getElementById('btn-dislike');
+            const iconLike = document.getElementById('icon-like');
+            const iconDislike = document.getElementById('icon-dislike');
+            const likeCountEl = document.getElementById('like-count');
+            const dislikeCountEl = document.getElementById('dislike-count');
+
+            iconLike.classList.remove('animate-like-pop');
+            iconDislike.classList.remove('animate-dislike-pop');
+            void iconLike.offsetWidth;
+
+            if (userVote === type) {
+                if (type === 'like') {
+                    baseLikes--;
+                    btnLike.className = "flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 dark:bg-slate-800 dark:hover:bg-sky-500/20 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition-all cursor-pointer";
+                    iconLike.className = 'fa-regular fa-thumbs-up text-brand-600 dark:text-sky-400 text-sm transition-transform';
+                } else {
+                    baseDislikes--;
+                    btnDislike.className = "flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 dark:bg-slate-800 dark:hover:bg-rose-500/20 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition-all cursor-pointer";
+                    iconDislike.className = 'fa-regular fa-thumbs-down text-rose-500 text-sm transition-transform';
+                }
+                userVote = null;
+            } else {
+                if (userVote === 'like') {
+                    baseLikes--;
+                    btnLike.className = "flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-brand-50 dark:bg-slate-800 dark:hover:bg-sky-500/20 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition-all cursor-pointer";
+                    iconLike.className = 'fa-regular fa-thumbs-up text-brand-600 dark:text-sky-400 text-sm transition-transform';
+                } else if (userVote === 'dislike') {
+                    baseDislikes--;
+                    btnDislike.className = "flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-100 hover:bg-rose-50 dark:bg-slate-800 dark:hover:bg-rose-500/20 border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-200 transition-all cursor-pointer";
+                    iconDislike.className = 'fa-regular fa-thumbs-down text-rose-500 text-sm transition-transform';
+                }
+
+                if (type === 'like') {
+                    baseLikes++;
+                    btnLike.className = "flex items-center gap-2 px-4 py-2 rounded-xl bg-brand-600 text-white border border-brand-600 text-xs font-bold shadow-md shadow-brand-500/30 transition-all cursor-pointer";
+                    iconLike.className = 'fa-solid fa-thumbs-up text-white text-sm animate-like-pop';
+                    triggerFloatingIndicator('like-float', '+1');
+                } else {
+                    baseDislikes++;
+                    btnDislike.className = "flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-500 text-white border border-rose-500 text-xs font-bold shadow-md shadow-rose-500/30 transition-all cursor-pointer";
+                    iconDislike.className = 'fa-solid fa-thumbs-down text-white text-sm animate-dislike-pop';
+                    triggerFloatingIndicator('dislike-float', '+1');
+                }
+                userVote = type;
+            }
+
+            likeCountEl.innerText = baseLikes;
+            dislikeCountEl.innerText = baseDislikes;
+        }
+
+        // Top Up Order Submission (User ID & Zone ID Only)
+        function submitTopup(e) {
+            e.preventDefault();
+            const userId = document.getElementById('topup-userid').value.trim();
+            const zoneId = document.getElementById('topup-zoneid').value.trim();
+            const phone = document.getElementById('topup-phone').value.trim();
+            const reason = document.getElementById('topup-reason').value;
+            const feedback = document.getElementById('topup-feedback').value.trim();
+
+            if (!selectedDiamond) {
+                showToast('Silakan pilih nominal diamond terlebih dahulu!');
+                document.getElementById('diamond-grid').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                return;
+            }
+
+            const message = `Halo Admin Vallz Store, saya ingin Top Up Diamond MLBB:\n\n` +
+                            `• Layanan: Top Up Diamond MLBB\n` +
+                            `• Nominal: ${selectedDiamond.count} Diamond (${selectedDiamond.price})\n` +
+                            `• User ID: ${userId}\n` +
+                            `• Zone ID: ${zoneId}\n` +
+                            `• No WhatsApp: ${phone}\n` +
+                            `• Alasan Memilih: ${reason || '-'}\n` +
+                            `• Catatan: ${feedback || '-'}`;
+
+            window.open(`https://wa.me/6282122905448?text=${encodeURIComponent(message)}`, '_blank');
+        }
+
+        // Jasa Joki Order Submission (Per Bintang)
+        function submitJoki(e) {
+            e.preventDefault();
+            const account = document.getElementById('joki-account').value.trim();
+            const pass = document.getElementById('joki-pass').value;
+            const phone = document.getElementById('joki-phone').value.trim();
+            const jokiType = document.getElementById('joki-type').value;
+            const targetRank = document.getElementById('joki-target-rank').value;
+            const stars = Math.max(1, parseInt(document.getElementById('joki-stars').value, 10) || 1);
+            const feedback = document.getElementById('joki-feedback').value.trim();
+
+            if (!targetRank) {
+                showToast('Silakan pilih tier rank tujuan terlebih dahulu!');
+                return;
+            }
+
+            const foundRank = jokiRanks.find(r => r.rank === targetRank);
+            const unitPrice = foundRank ? (jokiType === 'express' ? foundRank.expressPrice : foundRank.regulerPrice) : 0;
+            const totalPrice = unitPrice * stars;
+
+            const modeTitle = jokiType === 'express' ? 'Express Kilat (Min 2 Hari) ⚡' : 'Reguler Standar';
+
+            const message = `Halo Admin Joki Vallz Store, saya ingin order Jasa Joki Per Bintang:\n\n` +
+                            `• Layanan: Jasa Joki Rank MLBB (Per Bintang)\n` +
+                            `• Tipe Order: ${modeTitle}\n` +
+                            `• Tier Rank: ${targetRank} (${formatRupiah(unitPrice)} / ⭐)\n` +
+                            `• Jumlah Bintang: ${stars} ⭐\n` +
+                            `• Estimasi Total: ${formatRupiah(totalPrice)}\n` +
+                            `• Akun Moonton: ${account}\n` +
+                            `• Password Moonton: ${pass}\n` +
+                            `• No WhatsApp: ${phone}\n` +
+                            `• Catatan Joki: ${feedback || '-'}`;
+
+            window.open(`https://wa.me/6282122905448?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
